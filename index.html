@@ -64,6 +64,25 @@
             transition: opacity 0.2s;
             pointer-events: none;
         }
+        .map-label {
+            background: rgba(255,255,255,0.85);
+            padding: 0.12rem 0.40rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            color: #0369a1;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+            font-size: 0.80rem;
+            white-space: nowrap;
+            pointer-events: auto;
+            border: 1px solid #bae6fd;
+            z-index: 20;
+            user-select: none;
+        }
+        /* 專用縮小第三醫療大樓標籤字體 */
+        .map-label.small-label {
+            font-size: 0.72rem !important;
+            padding: 0.06rem 0.32rem !important;
+        }
         footer {
             background: #f1f5f9;
         }
@@ -109,28 +128,24 @@
         <!-- 主卡片仿圖設計 Start -->
         <section id="programs" class="mb-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- 師資培育中心 Card -->
                 <a href="T.html" class="main-bg-1 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105" target="_self">
                     <div class="card-overlay flex-col text-center">
                         <span class="main-card-title">師資培育中心</span>
                         <span class="main-card-desc">提供師資聘任、升等、全人照護與教學獎勵等完整資訊。</span>
                     </div>
                 </a>
-                <!-- 住院醫師訓練 Card -->
                 <a href="R.html" class="main-bg-2 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105" target="_self">
                     <div class="card-overlay flex-col text-center">
                         <span class="main-card-title">住院醫師訓練</span>
                         <span class="main-card-desc">年度考核、訓練課程、獎勵金與進修機會詳情。</span>
                     </div>
                 </a>
-                <!-- PGY訓練 Card -->
                 <a href="PGY.html" class="main-bg-3 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105" target="_self">
                     <div class="card-overlay flex-col text-center">
                         <span class="main-card-title">PGY訓練</span>
                         <span class="main-card-desc">畢業後一般醫學訓練的課程、考核、值班與請假規範。</span>
                     </div>
                 </a>
-                <!-- UGY訓練 Card -->
                 <a href="UGY.html" class="main-bg-4 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105" target="_self">
                     <div class="card-overlay flex-col text-center">
                         <span class="main-card-title">UGY訓練</span>
@@ -146,21 +161,28 @@
             <div class="relative w-full max-w-3xl mx-auto">
                 <img src="https://raw.githubusercontent.com/chylio/teaching-department/main/layout_cmh_02.jpg" alt="奇美醫院建築地圖" class="w-full rounded-xl shadow-lg" id="cmhMap">
 
-                <!-- 疊加文字標籤（座標依實際地圖微調） -->
-                <span class="map-label absolute left-[17%] top-[40%] z-10"
+                <!-- 教學大樓標籤（位於教學大樓黑色文字正上方，字體縮小） -->
+                <span class="map-label absolute left-[23%] top-[45%]"
+                    style="transform:translate(-50%,-100%); font-size:0.80rem;" 
                     onmouseenter="showBigTooltip('三樓教學部', event)"
                     onmouseleave="hideBigTooltip()">教學大樓</span>
-                <span class="map-label absolute left-[37%] top-[52%] z-10"
+                <!-- 第二醫療大樓標籤（在建築上方且不疊地圖文字，字體縮小） -->
+                <span class="map-label absolute left-[60%] top-[19%]"
+                    style="transform:translate(-50%,-100%); font-size:0.80rem;" 
                     onmouseenter="showBigTooltip('12樓UGY值班室', event)"
                     onmouseleave="hideBigTooltip()">第二醫療大樓</span>
-                <span class="map-label absolute left-[77%] top-[55%] z-10"
+                <!-- 第五醫療大樓標籤（維持原位置，字體縮小） -->
+                <span class="map-label absolute left-[82%] top-[62%]"
+                    style="transform:translate(-50%,0); font-size:0.80rem;" 
                     onmouseenter="showBigTooltip('五樓PGY辦公室', event)"
                     onmouseleave="hideBigTooltip()">第五醫療大樓</span>
-                <span class="map-label absolute left-[13%] top-[77%] z-10"
+                <!-- 第三醫療大樓標籤（字體縮小，避免太大疊到地圖文字） -->
+                <span class="map-label small-label absolute left-[18%] top-[91%]"
+                    style="transform:translate(-50%,0);" 
                     onmouseenter="showBigTooltip('四樓總務室\n六樓安全衛生室', event)"
                     onmouseleave="hideBigTooltip()">第三醫療大樓</span>
 
-                <!-- 疊加熱區 -->
+                <!-- 疊加熱區（原位置不變） -->
                 <div class="absolute left-[15%] top-[30%] w-[10%] h-[15%] group cursor-pointer"
                     onmouseenter="showBigTooltip('三樓教學部', event)" onmouseleave="hideBigTooltip()"></div>
                 <div class="absolute left-[35%] top-[40%] w-[10%] h-[15%] group cursor-pointer"
