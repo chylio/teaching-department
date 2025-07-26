@@ -78,7 +78,6 @@
             z-index: 20;
             user-select: none;
         }
-        /* 專用縮小第三醫療大樓標籤字體 */
         .map-label.small-label {
             font-size: 0.72rem !important;
             padding: 0.06rem 0.32rem !important;
@@ -86,7 +85,6 @@
         footer {
             background: #f1f5f9;
         }
-        /* Logo 長方形最佳呈現，放大 */
         .logo-img {
             display: block;
             object-fit: contain;
@@ -102,6 +100,18 @@
                 width: 160px;
                 margin-right: 0.75rem;
             }
+            .map-label {
+                font-size: 0.67rem !important;
+                padding: 0.07rem 0.23rem !important;
+            }
+            .map-label.small-label {
+                font-size: 0.62rem !important;
+                padding: 0.03rem 0.18rem !important;
+            }
+            #bigTooltip {
+                font-size: 1.3rem !important;
+                padding: 0.7rem 1.2rem !important;
+            }
         }
     </style>
 </head>
@@ -111,7 +121,6 @@
     <header class="bg-white shadow-sm sticky top-0 z-20">
         <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between py-2">
             <div class="flex items-center">
-                <!-- Logo 以長方形最佳呈現，加大 -->
                 <img src="chi_mei_medical_center_blue.png" alt="Chi Mei Medical Center Logo" class="logo-img hidden md:inline-block">
                 <div>
                     <h1 class="text-xl md:text-2xl font-bold text-slate-800 leading-tight mb-1">
@@ -155,7 +164,7 @@
                 <a href="R.html" class="main-bg-2 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105">
                     <div class="card-overlay flex-col text-center">
                         <span class="main-card-title">住院醫師訓練</span>
-                        <span class="main-card-desc">年度考核、訓練課程、獎勵金與進修機會詳情。</span>
+                        <span class="main-card-desc">年度考核、訓練課程與進修機會詳情。</span>
                     </div>
                 </a>
                 <a href="PGY.html" class="main-bg-3 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105">
@@ -176,39 +185,51 @@
 
         <!-- 地圖互動區塊 Start -->
         <section id="cmh-map" class="my-12 flex flex-col items-center">
-            <div class="relative w-full max-w-3xl mx-auto">
+            <div class="relative w-full max-w-3xl mx-auto" id="cmhMapContainer">
                 <img src="https://raw.githubusercontent.com/chylio/teaching-department/main/layout_cmh_02.jpg" alt="奇美醫院建築地圖" class="w-full rounded-xl shadow-lg" id="cmhMap">
 
-                <!-- 教學大樓標籤（位於教學大樓黑色文字正上方，字體縮小） -->
+                <!-- 教學大樓標籤 -->
                 <span class="map-label absolute left-[23%] top-[45%]"
-                    style="transform:translate(-50%,-100%); font-size:0.80rem;" 
+                    style="transform:translate(-50%,-100%); font-size:0.80rem;"
                     onmouseenter="showBigTooltip('三樓教學部', event)"
-                    onmouseleave="hideBigTooltip()">教學大樓</span>
-                <!-- 第二醫療大樓標籤（在建築上方且不疊地圖文字，字體縮小） -->
+                    onmouseleave="hideBigTooltip()"
+                    ontouchstart="showBigTooltip('三樓教學部', event)"
+                    ontouchend="hideBigTooltip()">教學大樓</span>
+                <!-- 第二醫療大樓標籤 -->
                 <span class="map-label absolute left-[60%] top-[19%]"
-                    style="transform:translate(-50%,-100%); font-size:0.80rem;" 
+                    style="transform:translate(-50%,-100%); font-size:0.80rem;"
                     onmouseenter="showBigTooltip('12樓UGY值班室', event)"
-                    onmouseleave="hideBigTooltip()">第二醫療大樓</span>
-                <!-- 第五醫療大樓標籤（維持原位置，字體縮小） -->
+                    onmouseleave="hideBigTooltip()"
+                    ontouchstart="showBigTooltip('12樓UGY值班室', event)"
+                    ontouchend="hideBigTooltip()">第二醫療大樓</span>
+                <!-- 第五醫療大樓標籤 -->
                 <span class="map-label absolute left-[82%] top-[62%]"
-                    style="transform:translate(-50%,0); font-size:0.80rem;" 
+                    style="transform:translate(-50%,0); font-size:0.80rem;"
                     onmouseenter="showBigTooltip('五樓PGY辦公室', event)"
-                    onmouseleave="hideBigTooltip()">第五醫療大樓</span>
-                <!-- 第三醫療大樓標籤（字體縮小，避免太大疊到地圖文字） -->
+                    onmouseleave="hideBigTooltip()"
+                    ontouchstart="showBigTooltip('五樓PGY辦公室', event)"
+                    ontouchend="hideBigTooltip()">第五醫療大樓</span>
+                <!-- 第三醫療大樓標籤 -->
                 <span class="map-label small-label absolute left-[18%] top-[91%]"
-                    style="transform:translate(-50%,0);" 
+                    style="transform:translate(-50%,0);"
                     onmouseenter="showBigTooltip('四樓總務室\n六樓安全衛生室', event)"
-                    onmouseleave="hideBigTooltip()">第三醫療大樓</span>
+                    onmouseleave="hideBigTooltip()"
+                    ontouchstart="showBigTooltip('四樓總務室\n六樓安全衛生室', event)"
+                    ontouchend="hideBigTooltip()">第三醫療大樓</span>
 
                 <!-- 疊加熱區（原位置不變） -->
                 <div class="absolute left-[15%] top-[30%] w-[10%] h-[15%] group cursor-pointer"
-                    onmouseenter="showBigTooltip('三樓教學部', event)" onmouseleave="hideBigTooltip()"></div>
+                    onmouseenter="showBigTooltip('三樓教學部', event)" onmouseleave="hideBigTooltip()"
+                    ontouchstart="showBigTooltip('三樓教學部', event)" ontouchend="hideBigTooltip()"></div>
                 <div class="absolute left-[35%] top-[40%] w-[10%] h-[15%] group cursor-pointer"
-                    onmouseenter="showBigTooltip('12樓UGY值班室', event)" onmouseleave="hideBigTooltip()"></div>
+                    onmouseenter="showBigTooltip('12樓UGY值班室', event)" onmouseleave="hideBigTooltip()"
+                    ontouchstart="showBigTooltip('12樓UGY值班室', event)" ontouchend="hideBigTooltip()"></div>
                 <div class="absolute left-[13%] top-[77%] w-[22%] h-[15%] group cursor-pointer"
-                    onmouseenter="showBigTooltip('四樓總務室\n六樓安全衛生室', event)" onmouseleave="hideBigTooltip()"></div>
+                    onmouseenter="showBigTooltip('四樓總務室\n六樓安全衛生室', event)" onmouseleave="hideBigTooltip()"
+                    ontouchstart="showBigTooltip('四樓總務室\n六樓安全衛生室', event)" ontouchend="hideBigTooltip()"></div>
                 <div class="absolute left-[75%] top-[45%] w-[10%] h-[15%] group cursor-pointer"
-                    onmouseenter="showBigTooltip('五樓PGY辦公室', event)" onmouseleave="hideBigTooltip()"></div>
+                    onmouseenter="showBigTooltip('五樓PGY辦公室', event)" onmouseleave="hideBigTooltip()"
+                    ontouchstart="showBigTooltip('五樓PGY辦公室', event)" ontouchend="hideBigTooltip()"></div>
 
                 <!-- 大型浮動提示 -->
                 <div id="bigTooltip"
@@ -225,16 +246,27 @@
     </footer>
 
     <script>
-    // 大型提示
+    // 大型提示（滑鼠與觸控均支援）
     function showBigTooltip(text, event) {
         const tooltip = document.getElementById('bigTooltip');
         tooltip.textContent = text;
         tooltip.classList.add('fade-in');
         tooltip.style.opacity = 1;
-        // 定位到滑鼠附近，或居中於地圖
-        const mapRect = document.getElementById('cmhMap').getBoundingClientRect();
-        let x = event.clientX - mapRect.left;
-        let y = event.clientY - mapRect.top;
+        // 定位到滑鼠/觸控點或居中於地圖
+        const mapRect = document.getElementById('cmhMapContainer').getBoundingClientRect();
+        let x = 0, y = 0;
+        // 若為觸控事件
+        if (event && event.touches && event.touches.length > 0) {
+            x = event.touches[0].clientX - mapRect.left;
+            y = event.touches[0].clientY - mapRect.top;
+        } else if (event && typeof event.clientX === "number") {
+            x = event.clientX - mapRect.left;
+            y = event.clientY - mapRect.top;
+        } else {
+            // 若無 event，預設居中
+            x = mapRect.width / 2;
+            y = mapRect.height / 2;
+        }
         tooltip.style.left = `${Math.max(0, x - 120)}px`;
         tooltip.style.top = `${Math.max(0, y - 90)}px`;
     }
