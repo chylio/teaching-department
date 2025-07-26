@@ -8,6 +8,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals (Stone, Sky, Slate) -->
+    <!-- Application Structure Plan: A single-page design with a sticky top navigation bar for quick access to key sections: Overview, Appointment & Promotion, Holistic Care, Teaching Incentives, Further Training Incentives, Publication & Assessment, and Performance Review. This linear, section-based structure is chosen for usability, allowing new faculty members to easily find specific guidelines and information. Key interactions include smooth scrolling navigation. -->
+    <!-- Visualization & Content Choices: 
+        - Overview/Introduction -> Goal: Inform -> Viz: Text Block -> Interaction: None -> Justification: Provides context. -> Method: HTML/CSS.
+        - Appointment & Promotion -> Goal: Inform -> Viz: Structured List -> Interaction: None -> Justification: Clearly outlines criteria for career progression. -> Method: HTML/CSS.
+        - Holistic Care - Clinical Teacher Certification -> Goal: Inform & Compare -> Viz: Static Number Cards (arranged in a row) -> Interaction: None -> Justification: Visually represents required credit hours for different stages using a static image, now in a compact row layout. -> Method: HTML/CSS/Image.
+        - Teaching Incentives - Academic Positions Salary -> Goal: Inform & Compare -> Viz: Structured List (financial details removed) -> Interaction: None -> Justification: Presents teaching incentives without specific monetary values as per user request. -> Method: HTML/CSS.
+        - Further Training Incentives - On-the-job Training Subsidy -> Goal: Inform -> Viz: Structured List (financial details removed) -> Interaction: None -> Justification: Outlines training subsidies without specific monetary values as per user request. -> Method: HTML/CSS.
+        - Further Training Incentives - International Conference Awards -> Goal: Inform -> Viz: Structured List (financial details removed) -> Interaction: None -> Justification: Describes conference awards without specific monetary values as per user request. -> Method: HTML/CSS.
+        - Publication & Assessment -> Goal: Inform -> Viz: Structured List -> Interaction: None -> Justification: Outlines requirements and rewards for research output. -> Method: HTML/CSS.
+        - Performance Review -> Goal: Inform -> Viz: Structured List -> Interaction: None -> Justification: Details criteria for evaluating faculty performance. -> Method: HTML/CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
             font-family: 'Inter', 'Noto Sans TC', sans-serif;
@@ -16,55 +29,57 @@
         .nav-link {
             transition: color 0.3s, border-bottom-color 0.3s;
         }
+        /* Re-added .nav-link.active rule for click-based highlighting */
         .nav-link.active {
             color: #0284c7;
             border-bottom-color: #0284c7;
         }
         .image-container {
             width: 100%;
-            max-width: 600px;
+            max-width: 600px; /* Max width for images */
             margin-left: auto;
             margin-right: auto;
-            margin-top: 24px;
-            margin-bottom: 24px;
+            margin-top: 24px; /* Tailwind mt-6 */
+            margin-bottom: 24px; /* Tailwind mb-6 */
         }
         .image-container img {
             width: 100%;
             height: auto;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem; /* rounded-xl */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* shadow-sm */
+            border: 1px solid #e2e8f0; /* border border-slate-200 */
         }
+        /* Custom styles for the numerical display cards */
         .number-card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem;
+            gap: 1.5rem; /* Equivalent to Tailwind gap-6 */
+            margin-top: 1.5rem; /* Equivalent to Tailwind mt-6 */
+            margin-bottom: 1.5rem; /* Equivalent to Tailwind mb-6 */
         }
         .number-card {
-            background-color: #e0f2f7;
-            padding: 1.5rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            border: 1px solid #bae6fd;
+            background-color: #e0f2f7; /* Light blue similar to image_788ce2.png */
+            padding: 1.5rem; /* Equivalent to Tailwind p-6 */
+            border-radius: 0.75rem; /* Equivalent to Tailwind rounded-xl */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Equivalent to Tailwind shadow-sm */
+            border: 1px solid #bae6fd; /* A slightly darker border */
             text-align: center;
         }
         .number-card h4 {
-            font-weight: 600;
-            color: #0284c7;
-            margin-bottom: 0.5rem;
+            font-weight: 600; /* semibold */
+            color: #0284c7; /* sky-700 */
+            margin-bottom: 0.5rem; /* mb-2 */
         }
         .number-card p.value {
-            font-size: 2.25rem;
-            font-weight: 700;
-            color: #1e293b;
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* bold */
+            color: #1e293b; /* slate-800 */
             line-height: 1;
         }
         .number-card p.description {
-            font-size: 0.875rem;
-            color: #475569;
-            margin-top: 0.5rem;
+            font-size: 0.875rem; /* text-sm */
+            color: #475569; /* slate-600 */
+            margin-top: 0.5rem; /* mt-2 */
         }
     </style>
 </head>
@@ -96,7 +111,7 @@
 <main class="container mx-auto p-4 md:p-8">
 
     <section id="overview" class="mb-12 scroll-mt-20">
-        <h2 class="text-3xl font-bold text-slate-800 mb-4"></h2>
+        <h2 class="text-3xl font-bold text-slate-800 mb-4">師資培育總覽</h2>
         <p class="text-slate-600 mb-6">本攻略旨在為奇美醫院的師資提供聘任、升等、全人照護、教學獎勵、進修訓練獎勵、論文評核及績效考核等全面資訊，協助師資了解醫院的培育政策，促進專業成長與發展。</p>
         <div class="grid md:grid-cols-2 gap-6">
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
@@ -128,7 +143,7 @@
                 <li>R3以上【進階】：課程學分15小時</li>
                 <li>VS首次／展延：課程學分：20 小時</li>
             </ul>
-            <div class="number-card-grid">
+            <div class="number-card-grid lg:grid-cols-3"> <!-- Modified grid-template-columns for a single row on larger screens -->
                 <div class="number-card">
                     <h4>R1-R2 (初階)</h4>
                     <p class="value">10<span class="text-base font-normal">小時</span></p>
@@ -155,33 +170,8 @@
         <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
             <ul class="space-y-3 list-disc list-inside text-slate-600">
                 <li>教學績效薪資 核給：取自主治醫師總薪資之26%重分配，詳細內容請查詢相關辦法。</li>
-                <li>教學基本薪資：每月4萬元。</li>
-                <li>部定教職：講師5千元，助理教授1萬元，副教授1萬5千元，教授2萬元。</li>
-                <li>教學資歷：第一年VS每月加給1千元，爾後每增加一年每月加給1千元正。</li>
                 <li>教學資歷薪資 核給：每年須累計12小時參與醫教會及病歷委員會所主導之病歷教學活動。</li>
             </ul>
-            <div class="number-card-grid">
-                <div class="number-card">
-                    <h4>講師</h4>
-                    <p class="value">5<span class="text-base font-normal">千元</span></p>
-                    <p class="description">每月教學基本薪資</p>
-                </div>
-                <div class="number-card">
-                    <h4>助理教授</h4>
-                    <p class="value">1<span class="text-base font-normal">萬元</span></p>
-                    <p class="description">每月教學基本薪資</p>
-                </div>
-                <div class="number-card">
-                    <h4>副教授</h4>
-                    <p class="value">1.5<span class="text-base font-normal">萬元</span></p>
-                    <p class="description">每月教學基本薪資</p>
-                </div>
-                <div class="number-card">
-                    <h4>教授</h4>
-                    <p class="value">2<span class="text-base font-normal">萬元</span></p>
-                    <p class="description">每月教學基本薪資</p>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -195,61 +185,15 @@
                         <li>資格：服務滿半年以上之主治(含備任)醫師。</li>
                         <li>職責：年資滿三年內，赴國外進修至少三個月(含)以上。</li>
                         <li>手續：進修至少 兩個月前填妥「在職進修申請表」。</li>
-                        <li>補助費：國內10萬、亞洲15萬、歐美、日本：20萬。</li>
                         <li>合約：延長二倍服務時間。</li>
                     </ul>
-                    <div class="number-card-grid">
-                        <div class="number-card">
-                            <h4>國內</h4>
-                            <p class="value">10<span class="text-base font-normal">萬元</span></p>
-                            <p class="description">補助費</p>
-                        </div>
-                        <div class="number-card">
-                            <h4>亞洲</h4>
-                            <p class="value">15<span class="text-base font-normal">萬元</span></p>
-                            <p class="description">補助費</p>
-                        </div>
-                        <div class="number-card">
-                            <h4>歐美/日本</h4>
-                            <p class="value">20<span class="text-base font-normal">萬元</span></p>
-                            <p class="description">補助費</p>
-                        </div>
-                    </div>
                 </li>
                 <li><strong>參加國外醫學會議獎勵：</strong>
                     <ul class="list-none pl-6 mt-1 space-y-2">
                         <li>對象：主治醫師(含備任主治醫師)、專任教授級研究員。</li>
                         <li>原則：一年二次為限；申請第二次報告內容須與第一次非完全相同，每篇文章僅限補助一位作者。</li>
                         <li>範圍：往返機票(經濟艙為準)、報名費及生活費。</li>
-                        <li>金額：三大世界性學會：【口頭報告】全額補助、【海報發表】80%；非三大世界性學會：【口頭報告】亞洲四萬元，歐美及其他五萬元；【海報發表】亞洲三萬元，歐美及其他四萬元。</li>
                     </ul>
-                    <div class="number-card-grid">
-                        <div class="number-card">
-                            <h4>三大世界性學會</h4>
-                            <p class="value">全額<span class="text-base font-normal">補助</span></p>
-                            <p class="description">口頭報告</p>
-                        </div>
-                        <div class="number-card">
-                            <h4>非三大 (亞洲)</h4>
-                            <p class="value">4<span class="text-base font-normal">萬元</span></p>
-                            <p class="description">口頭報告</p>
-                        </div>
-                        <div class="number-card">
-                            <h4>非三大 (歐美/其他)</h4>
-                            <p class="value">5<span class="text-base font-normal">萬元</span></p>
-                            <p class="description">口頭報告</p>
-                        </div>
-                        <div class="number-card">
-                            <h4>非三大 (亞洲)</h4>
-                            <p class="value">3<span class="text-base font-normal">萬元</span></p>
-                            <p class="description">海報發表</p>
-                        </div>
-                        <div class="number-card">
-                            <h4>非三大 (歐美/其他)</h4>
-                            <p class="value">4<span class="text-base font-normal">萬元</span></p>
-                            <p class="description">海報發表</p>
-                        </div>
-                    </div>
                 </li>
             </ul>
         </div>
@@ -307,39 +251,16 @@ document.addEventListener('DOMContentLoaded', function () {
     updateHeaderHeight();
     window.addEventListener('resize', updateHeaderHeight);
 
-    function updateActiveNavLink() {
-        let current = '';
-        const offset = headerHeight + 20; 
-
-        for (let i = sections.length - 1; i >= 0; i--) {
-            const section = sections[i];
-            const rect = section.getBoundingClientRect();
-            if (rect.top <= offset && rect.bottom > offset) {
-                current = section.getAttribute('id');
-                break; 
-            }
-        }
-        if (!current && sections.length > 0) {
-            const firstSectionRect = sections[0].getBoundingClientRect();
-            if (firstSectionRect.top <= offset || window.pageYOffset === 0) {
-                current = sections[0].getAttribute('id');
-            }
-        }
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            const linkHref = link.getAttribute('href');
-            if (linkHref === `#${current}`) {
-                link.classList.add('active');
-            }
-        });
-    }
-
-    window.addEventListener('scroll', updateActiveNavLink);
-    updateActiveNavLink(); 
+    // Removed updateActiveNavLink function and its calls for scroll-based highlighting
 
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
+            // Remove 'active' class from all nav links
+            navLinks.forEach(nav => nav.classList.remove('active'));
+            // Add 'active' class to the clicked link
+            this.classList.add('active');
+
             const targetId = this.getAttribute('href').substring(1);
             const targetSection = document.getElementById(targetId);
             if (targetSection) {
@@ -347,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     top: targetSection.offsetTop - headerHeight - 10, 
                     behavior: 'smooth'
                 });
-                setTimeout(updateActiveNavLink, 250); 
+                // No need for setTimeout here as active class is set immediately on click
             }
         });
     });
