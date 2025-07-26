@@ -104,11 +104,9 @@
         <section id="assessment" class="mb-12 scroll-mt-20">
             <h2 class="text-3xl font-bold text-slate-800 mb-2">考核標準</h2>
             <p class="text-slate-600 mb-6">PGY訓練成效評估分為三大面向，各項配分比重清晰，以確保全方位的學習與成長。</p>
+            <!-- 刪除甜甜圈圖表，僅保留條列說明 -->
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                 <div class="flex flex-col lg:flex-row items-center gap-8">
-                    <div class="chart-container">
-                        <canvas id="assessmentChart"></canvas>
-                    </div>
                     <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
                         <div class="border-l-4 border-sky-500 p-4 bg-slate-50 rounded-lg">
                             <h4 class="font-bold text-lg">知識面 (15%)</h4>
@@ -196,7 +194,7 @@
 
         <section id="epas" class="scroll-mt-20">
             <h2 class="text-3xl font-bold text-slate-800 mb-2">Entrustable Professional Activities (EPAs)等級</h2>
-            <p class="text-slate-600 mb-6">EPAs是評估臨床實踐能力的標準。下表詳細列出不同身份在急診醫學部的各項任務授權等級。將滑鼠移至等級數字上可查閱定義。</p>
+            <p class="text-slate-600 mb-6">EPAs是評估臨床實踐能力的標準。下表詳細列出不同身份在急診醫學部的各項任務授權等級。將滑鼠移至等級數字上可查[...]
             <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
                 <h3 class="font-bold text-lg text-sky-700 mb-4">授權/督導狀態等級</h3>
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6 text-center">
@@ -371,49 +369,9 @@
                 document.getElementById(key).innerHTML = departmentData[key];
             });
 
-            const assessmentCtx = document.getElementById('assessmentChart').getContext('2d');
-            new Chart(assessmentCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['知識面', '技術面', '態度面'],
-                    datasets: [{
-                        label: '考核配分',
-                        data: [15, 35, 50],
-                        backgroundColor: [
-                            'rgb(56, 189, 248)', // sky
-                            'rgb(20, 184, 166)', // teal
-                            'rgb(245, 158, 11)'  // amber
-                        ],
-                        borderColor: '#f8fafc',
-                        borderWidth: 4,
-                        hoverOffset: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    let label = context.label || '';
-                                    if (label) {
-                                        label += ': ';
-                                    }
-                                    if (context.parsed !== null) {
-                                        label += context.parsed + '%';
-                                    }
-                                    return label;
-                                }
-                            }
-                        }
-                    },
-                    cutout: '60%'
-                }
-            });
+            // 已移除甜甜圈圖表的 JavaScript
+            // const assessmentCtx = document.getElementById('assessmentChart').getContext('2d');
+            // new Chart(assessmentCtx, { ... });
 
             const tabsContainer = document.getElementById('tabs-container');
             const tabContents = document.querySelectorAll('.tab-content');
