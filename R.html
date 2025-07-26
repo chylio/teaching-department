@@ -9,12 +9,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals (Stone, Sky, Slate) -->
-    <!-- Application Structure Plan: A single-page design with a sticky top navigation bar for quick access to key sections: Overview, Annual Assessment, Training Courses, Further Study, and Quick Links. This linear, section-based structure is chosen for usability, allowing new residents to easily find specific guidelines and information. Key interactions include smooth scrolling navigation. -->
+    <!-- Application Structure Plan: A single-page design with a sticky top navigation bar for quick access to key sections: Overview, Annual Assessment, Training Courses, Further Study, and Quick Links. This linear, section-based structure is chosen for usability, allowing new residents to easily find specific guidelines and information. Key interactions include smooth scrolling navigation and click-based active navigation links. -->
     <!-- Visualization & Content Choices: 
         - Overview/Introduction -> Goal: Inform -> Viz: Text Block -> Interaction: None -> Justification: Provides context. -> Method: HTML/CSS.
-        - Annual Assessment -> Goal: Inform & Compare -> Viz: Static Number Cards for quantifiable items, Structured List for others -> Interaction: None -> Justification: Clearly outlines criteria for promotion and salary adjustment, highlighting numerical targets. -> Method: HTML/CSS.
+        - Annual Assessment -> Goal: Inform & Compare -> Viz: Static Number Cards for quantifiable items, Structured List for others -> Interaction: None -> Justification: Clearly outlines criteria for promotion and numerical targets. -> Method: HTML/CSS.
         - Training Courses -> Goal: Inform -> Viz: Structured List -> Interaction: None -> Justification: Details required courses and resources. -> Method: HTML/CSS.
-        - Further Study -> Goal: Inform -> Viz: Structured List -> Interaction: None -> Justification: Presents various study types and regions, with financial details removed as per user request. -> Method: HTML/CSS.
+        - Further Study -> Goal: Inform -> Viz: Structured List (financial details removed) -> Interaction: None -> Justification: Presents various study types and regions, with financial details removed as per user request. -> Method: HTML/CSS.
         - Quick Links -> Goal: Inform -> Viz: Key-Value Pairs/Short Lists -> Interaction: None -> Justification: Provides quick access to essential internal resources and procedures. -> HTML/CSS.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
@@ -30,7 +30,6 @@
             color: #0284c7;
             border-bottom-color: #0284c7;
         }
-        /* Custom styles for the numerical display cards */
         .number-card-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -67,16 +66,22 @@
 <body class="text-slate-700">
 
     <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-10">
-        <nav class="container mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
-                <h1 class="text-xl md:text-2xl font-bold text-sky-700">新進住院醫師須知</h1>
-                <div class="hidden md:flex space-x-6">
-                    <a href="#overview" class="nav-link pb-1 border-b-2 border-transparent">總覽</a>
-                    <a href="#assessment" class="nav-link pb-1 border-b-2 border-transparent">年度考核</a>
-                    <a href="#courses" class="nav-link pb-1 border-b-2 border-transparent">訓練課程</a>
-                    <a href="#further-study" class="nav-link pb-1 border-b-2 border-transparent">進修</a>
-                    <a href="#quick-links" class="nav-link pb-1 border-b-2 border-transparent">常用查詢</a>
-                </div>
+        <nav class="container mx-auto px-4 flex items-center h-16">
+            <!-- 返回首頁按鈕 -->
+            <a href="index.html" class="flex items-center gap-2 px-3 py-1 rounded hover:bg-sky-100 text-sky-700 font-bold mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h5a1 1 0 001-1v-5h2v5a1 1 0 001 1h5a1 1 0 001-1V10" />
+                </svg>
+                首頁
+            </a>
+            <h1 class="text-xl md:text-2xl font-bold text-sky-700">新進住院醫師須知</h1>
+            <div class="hidden md:flex space-x-6 ml-auto">
+                <a href="#overview" class="nav-link pb-1 border-b-2 border-transparent">總覽</a>
+                <a href="#assessment" class="nav-link pb-1 border-b-2 border-transparent">年度考核</a>
+                <a href="#courses" class="nav-link pb-1 border-b-2 border-transparent">訓練課程</a>
+                <a href="#further-study" class="nav-link pb-1 border-b-2 border-transparent">進修</a>
+                <a href="#quick-links" class="nav-link pb-1 border-b-2 border-transparent">常用查詢</a>
             </div>
         </nav>
     </header>
@@ -255,12 +260,16 @@
                 });
             }
 
-            window.addEventListener('scroll', updateActiveNavLink);
-            updateActiveNavLink(); 
+            // Removed window.addEventListener('scroll', updateActiveNavLink); as per user request to only activate on click
 
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
+                    // Remove 'active' class from all nav links
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    // Add 'active' class to the clicked link
+                    this.classList.add('active');
+
                     const targetId = this.getAttribute('href').substring(1);
                     const targetSection = document.getElementById(targetId);
                     if (targetSection) {
@@ -268,7 +277,7 @@
                             top: targetSection.offsetTop - headerHeight - 10, 
                             behavior: 'smooth'
                         });
-                        setTimeout(updateActiveNavLink, 250); 
+                        // No need for setTimeout here as active class is set immediately on click
                     }
                 });
             });
@@ -276,5 +285,3 @@
     </script>
 </body>
 </html>
-```
-我做了一些更改。我已從「奇美醫院新進住院醫師須知」文件中刪除所有與費用、獎勵金和補助相關的數據
