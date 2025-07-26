@@ -37,6 +37,20 @@
             color: #0284c7;
             border-bottom-color: #0284c7;
         }
+        .nav-link:hover {
+            color: #0284c7;
+            border-bottom-color: #0284c7;
+        }
+        .sub-nav-link {
+            color: #64748b;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+        }
+        .sub-nav-link:hover {
+            color: #0284c7;
+            background-color: #f1f5f9;
+        }
         .tab-btn.active {
             background-color: #0284c7;
             color: white;
@@ -66,13 +80,22 @@
     <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-10">
         <nav class="container mx-auto px-4">
             <div class="flex items-center justify-between h-16">
-                <h1 class="text-xl md:text-2xl font-bold text-sky-700">PGY訓練互動手冊</h1>
+                <h1 class="text-xl md:text-2xl font-bold text-sky-700"><a href="index.html">奇美醫院教學部</a></h1>
                 <div class="hidden md:flex space-x-6">
-                    <a href="#overview" class="nav-link pb-1 border-b-2 border-transparent">總覽</a>
-                    <a href="#assessment" class="nav-link pb-1 border-b-2 border-transparent">考核標準</a>
-                    <a href="#departments" class="nav-link pb-1 border-b-2 border-transparent">各科職責</a>
-                    <a href="#leave" class="nav-link pb-1 border-b-2 border-transparent">請假規範</a>
-                    <a href="#epas" class="nav-link pb-1 border-b-2 border-transparent">EPAs等級</a>
+                    <a href="teacher.html" class="nav-link pb-1 border-b-2 border-transparent flex items-center">教師培育中心 <span class="ml-1">▼</span></a>
+                    <a href="r.html" class="nav-link pb-1 border-b-2 border-transparent flex items-center">住院醫師訓練 <span class="ml-1">▼</span></a>
+                    <a href="PGY.html" class="nav-link pb-1 border-b-2 border-sky-600 flex items-center text-sky-600">PGY訓練 <span class="ml-1">▼</span></a>
+                    <a href="ugy.html" class="nav-link pb-1 border-b-2 border-transparent flex items-center">UGY訓練 <span class="ml-1">▼</span></a>
+                </div>
+            </div>
+            <!-- Sub-navigation for PGY section -->
+            <div class="border-t border-slate-200 py-2">
+                <div class="flex flex-wrap gap-4 text-sm">
+                    <a href="#overview" class="sub-nav-link">總覽</a>
+                    <a href="#assessment" class="sub-nav-link">考核標準</a>
+                    <a href="#departments" class="sub-nav-link">各科職責</a>
+                    <a href="#leave" class="sub-nav-link">請假規範</a>
+                    <a href="#epas" class="sub-nav-link">EPAs等級</a>
                 </div>
             </div>
         </nav>

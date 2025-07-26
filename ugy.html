@@ -6,19 +6,39 @@
     <title>UGY</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Lucide Icons CDN for icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
             background-color: #f3f4f6;
             color: #333;
             line-height: 1.6;
             scroll-behavior: smooth; /* Smooth scrolling for navigation */
         }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link:hover {
+            color: #0284c7;
+            border-bottom-color: #0284c7;
+        }
+        .sub-nav-link {
+            color: #64748b;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s;
+        }
+        .sub-nav-link:hover {
+            color: #0284c7;
+            background-color: #f1f5f9;
+        }
         .container {
             max-width: 1000px;
-            margin: 2rem auto;
+            margin: 0 auto;
             padding: 1.5rem;
             background-color: #ffffff;
             border-radius: 12px;
@@ -126,46 +146,38 @@
         }
     </style>
 </head>
-<body class="p-4">
-    <!-- 導覽列 -->
-    <nav class="sticky-nav">
-        <a href="#leave-rules" class="nav-button">
-            <svg class="lucide lucide-calendar-check" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/><path d="m9 16 2 2 4-4"/></svg>
-            <span>請假規範</span>
-        </a>
-        <a href="#card-pickup-location" class="nav-button">
-            <svg class="lucide lucide-map-pin" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span>假單領取地點</span>
-        </a>
-        <a href="#clinical-work-night-study" class="nav-button">
-            <svg class="lucide lucide-stethoscope" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11.3 18.7a2.43 2.43 0 0 1 2.8 0l2.6 2.6c.4.4 1 .6 1.6.6H20a2 2 0 0 0 2-2V7.5l-7.3-7.3A2 2 0 0 0 13.5 0H7a2 2 0 0 0-2 2v13.5a2.5 2.5 0 0 0 5 0v-2.6Z"/><path d="M12 13V2l4 4"/></svg>
-            <span>白班臨床工作及夜間學習/過夜學習規範值班須知</span>
-        </a>
-        <a href="#clinical-skills-center" class="nav-button">
-            <svg class="lucide lucide-building" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M12 18h.01"/></svg>
-            <span>臨床技能中心場地教具借用</span>
-        </a>
-        <a href="#ugy-duty-notes" class="nav-button">
-            <svg class="lucide lucide-clipboard-list" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 15h4"/><path d="M8 11h.01"/><path d="M8 15h.01"/></svg>
-            <span>UGY值班注意事宜</span>
-        </a>
-        <a href="#id-card-pickup" class="nav-button">
-            <svg class="lucide lucide-id-card" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 10h12"/><path d="M6 14h12"/><path d="M6 18h12"/></svg>
-            <span>領取識別證時間地點</span>
-        </a>
-        <a href="#ugy-duty-room" class="nav-button">
-            <svg class="lucide lucide-bed" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16h20V4"/><path d="M2 8h20"/><path d="M6 12h2"/><path d="M16 12h2"/><path d="M8 8v4"/><path d="M16 8v4"/></svg>
-            <span>UGY值班室地點</span>
-        </a>
-        <a href="#ugy-office" class="nav-button">
-            <svg class="lucide lucide-briefcase" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-            <span>UGY辦公室地點</span>
-        </a>
-    </nav>
+<body class="text-slate-700">
+    <!-- Unified header navigation -->
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-10">
+        <nav class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <h1 class="text-xl md:text-2xl font-bold text-sky-700"><a href="index.html">奇美醫院教學部</a></h1>
+                <div class="hidden md:flex space-x-6">
+                    <a href="teacher.html" class="nav-link pb-1 border-b-2 border-transparent flex items-center">教師培育中心 <span class="ml-1">▼</span></a>
+                    <a href="r.html" class="nav-link pb-1 border-b-2 border-transparent flex items-center">住院醫師訓練 <span class="ml-1">▼</span></a>
+                    <a href="PGY.html" class="nav-link pb-1 border-b-2 border-transparent flex items-center">PGY訓練 <span class="ml-1">▼</span></a>
+                    <a href="ugy.html" class="nav-link pb-1 border-b-2 border-sky-600 flex items-center text-sky-600">UGY訓練 <span class="ml-1">▼</span></a>
+                </div>
+            </div>
+            <!-- Sub-navigation for UGY section -->
+            <div class="border-t border-slate-200 py-2">
+                <div class="flex flex-wrap gap-4 text-sm">
+                    <a href="#leave-rules" class="sub-nav-link">請假規範</a>
+                    <a href="#card-pickup-location" class="sub-nav-link">假單領取地點</a>
+                    <a href="#clinical-work-night-study" class="sub-nav-link">白班工作及夜間學習</a>
+                    <a href="#clinical-skills-center" class="sub-nav-link">臨床技能中心</a>
+                    <a href="#ugy-duty-notes" class="sub-nav-link">UGY值班注意事宜</a>
+                    <a href="#id-card-pickup" class="sub-nav-link">領取識別證</a>
+                    <a href="#ugy-duty-room" class="sub-nav-link">UGY值班室地點</a>
+                    <a href="#ugy-office" class="sub-nav-link">UGY辦公室地點</a>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-    <div class="container">
-        <h1>UGY</h1>
-        <p class="date">實習醫學生組</p>
+    <main class="container mx-auto p-4 md:p-8">
+        <h1 class="text-3xl font-bold text-slate-800 mb-4">UGY訓練</h1>
+        <p class="text-slate-600 mb-8">實習醫學生組</p>
 
         <!-- 請假規範 -->
         <section id="leave-rules" class="mb-10">
@@ -371,6 +383,6 @@
                 </tbody>
             </table>
         </section>
-    </div>
+    </main>
 </body>
 </html>
