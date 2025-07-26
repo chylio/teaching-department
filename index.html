@@ -86,6 +86,23 @@
         footer {
             background: #f1f5f9;
         }
+        /* Logo 長方形最佳呈現，放大 */
+        .logo-img {
+            display: block;
+            object-fit: contain;
+            height: 80px;
+            width: 240px;
+            max-width: 300px;
+            margin-right: 1.25rem;
+            background: none;
+        }
+        @media (max-width: 768px) {
+            .logo-img {
+                height: 60px;
+                width: 160px;
+                margin-right: 0.75rem;
+            }
+        }
     </style>
 </head>
 <body class="text-slate-700">
@@ -94,7 +111,8 @@
     <header class="bg-white shadow-sm sticky top-0 z-20">
         <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between py-2">
             <div class="flex items-center">
-                <img src="https://raw.githubusercontent.com/chylio/teaching-department/main/logo.png" alt="Logo" class="h-12 w-12 mr-3 hidden md:inline-block">
+                <!-- Logo 以長方形最佳呈現，加大 -->
+                <img src="chi_mei_medical_center_blue.png" alt="Chi Mei Medical Center Logo" class="logo-img hidden md:inline-block">
                 <div>
                     <h1 class="text-xl md:text-2xl font-bold text-slate-800 leading-tight mb-1">
                       奇美醫療財團法人奇美醫院教學部
@@ -128,25 +146,25 @@
         <!-- 主卡片仿圖設計 Start -->
         <section id="programs" class="mb-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <a href="T.html" class="main-bg-1 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105" target="_self">
+                <a href="T.html" class="main-bg-1 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105">
                     <div class="card-overlay flex-col text-center">
                         <span class="main-card-title">師資培育中心</span>
                         <span class="main-card-desc">提供師資聘任、升等、全人照護與教學獎勵等完整資訊。</span>
                     </div>
                 </a>
-                <a href="R.html" class="main-bg-2 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105" target="_self">
+                <a href="R.html" class="main-bg-2 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105">
                     <div class="card-overlay flex-col text-center">
                         <span class="main-card-title">住院醫師訓練</span>
                         <span class="main-card-desc">年度考核、訓練課程、獎勵金與進修機會詳情。</span>
                     </div>
                 </a>
-                <a href="PGY.html" class="main-bg-3 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105" target="_self">
+                <a href="PGY.html" class="main-bg-3 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105">
                     <div class="card-overlay flex-col text-center">
                         <span class="main-card-title">PGY訓練</span>
                         <span class="main-card-desc">畢業後一般醫學訓練的課程、考核、值班與請假規範。</span>
                     </div>
                 </a>
-                <a href="UGY.html" class="main-bg-4 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105" target="_self">
+                <a href="UGY.html" class="main-bg-4 rounded-2xl shadow-lg h-40 flex items-center justify-center relative overflow-hidden card-link border border-slate-200 transition hover:scale-105">
                     <div class="card-overlay flex-col text-center">
                         <span class="main-card-title">UGY訓練</span>
                         <span class="main-card-desc">實習醫學生白班工作、夜間學習與實用資訊。</span>
@@ -194,7 +212,7 @@
 
                 <!-- 大型浮動提示 -->
                 <div id="bigTooltip"
-                    class="pointer-events-none absolute flex items-center justify-center bg-white border-4 border-sky-700 text-sky-700 text-4xl font-bold px-10 py-6 rounded-2xl shadow-2xl opacity-0 transition duration-200"
+                    class="pointer-events-none absolute flex items-center justify-center bg-white border-4 border-sky-700 text-sky-700 text-4xl font-bold px-10 py-6 rounded-2xl shadow-2xl opacity-0"
                     style="white-space:pre-line;">
                 </div>
             </div>
