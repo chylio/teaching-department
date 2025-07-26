@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奇美醫院PGY訓練互動手冊</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals (Stone, Sky, Slate) -->
+    <!-- Application Structure Plan: A single-page dashboard design with a sticky top navigation bar for quick access to key sections: Overview, Assessment, Department Responsibilities, Leave Policy, and EPAs. This non-linear structure is chosen for usability, allowing PGYs to quickly jump to the information they need most, rather than scrolling through a long document. Key interactions include a Chart.js doughnut chart for assessment weights, a tabbed interface for comparing department duties, and an interactive table with tooltips for EPAs, making dense data easily digestible. -->
+    <!-- Visualization & Content Choices: 
+        - Assessment Data -> Goal: Compare Proportions -> Viz: Doughnut Chart -> Interaction: Hover to see details -> Justification: Instantly shows the weight of each assessment category. -> Library: Chart.js.
+        - Department Duties -> Goal: Organize & Compare -> Viz: Tabbed Interface -> Interaction: Click tabs to switch content -> Justification: Avoids information overload and allows easy comparison between departments. -> Method: HTML/CSS/JS.
+        - EPA Levels -> Goal: Inform & Define -> Viz: Interactive HTML Table -> Interaction: Hover on level number to show definition tooltip -> Justification: Connects abstract numbers to concrete definitions without cluttering the UI. -> Method: HTML/CSS/JS.
+        - Leave Policy -> Goal: Inform -> Viz: Structured List/Cards -> Interaction: None -> Justification: Clear, scannable presentation for rule-based information. -> Method: HTML/CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc; 
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            height: 320px;
+            margin: auto;
+        }
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
+        }
+        .nav-link.active {
+            color: #0284c7;
+            border-bottom-color: #0284c7;
+        }
+        .tab-btn.active {
+            background-color: #0284c7;
+            color: white;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        #epa-tooltip {
+            position: absolute;
+            display: none;
+            background-color: #1f2937;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            pointer-events: none;
+            z-index: 10;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="text-slate-700">
+
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-10">
+        <nav class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <h1 class="text-xl md:text-2xl font-bold text-sky-700">PGY訓練互動手冊</h1>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#overview" class="nav-link pb-1 border-b-2 border-transparent">總覽</a>
+                    <a href="#assessment" class="nav-link pb-1 border-b-2 border-transparent">考核標準</a>
+                    <a href="#departments" class="nav-link pb-1 border-b-2 border-transparent">各科職責</a>
+                    <a href="#leave" class="nav-link pb-1 border-b-2 border-transparent">請假規範</a>
+                    <a href="#epas" class="nav-link pb-1 border-b-2 border-transparent">EPAs等級</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <section id="overview" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">訓練總覽</h2>
+            <p class="text-slate-600 mb-6">本手冊旨在落實對醫師畢業後一般醫學訓練(PGY)受訓醫師學習成效之考核，提供清晰的指引與規範。</p>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">基本課程要求</h3>
+                    <ul class="space-y-2 list-disc list-inside text-slate-600">
+                        <li>一年期: 24小時, 22案例分析</li>
+                        <li>二年期: 24小時, 25案例分析</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">訓練天數</h3>
+                    <p class="text-3xl font-bold">20 <span class="text-base font-normal text-slate-600">天/月</span></p>
+                    <p class="text-slate-500 mt-1">每月訓練天數須達標，不足者當月訓練不採計。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">完訓目標</h3>
+                    <p class="text-3xl font-bold">80<span class="text-base font-normal text-slate-600">%</span></p>
+                    <p class="text-slate-500 mt-1">總考核標準需達80%以上方可取得完訓證明。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="assessment" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">考核標準</h2>
+            <p class="text-slate-600 mb-6">PGY訓練成效評估分為三大面向，各項配分比重清晰，以確保全方位的學習與成長。</p>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex flex-col lg:flex-row items-center gap-8">
+                    <div class="chart-container">
+                        <canvas id="assessmentChart"></canvas>
+                    </div>
+                    <div class="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+                        <div class="border-l-4 border-sky-500 p-4 bg-slate-50 rounded-lg">
+                            <h4 class="font-bold text-lg">知識面 (15%)</h4>
+                            <p class="text-sm text-slate-600">基本課程前、後測平均成績</p>
+                        </div>
+                        <div class="border-l-4 border-teal-500 p-4 bg-slate-50 rounded-lg">
+                            <h4 class="font-bold text-lg">技術面 (35%)</h4>
+                            <ul class="text-sm text-slate-600 list-disc list-inside">
+                                <li>各項評估表單 (20%)</li>
+                                <li>Procedures / OSCE (15%)</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-amber-500 p-4 bg-slate-50 rounded-lg">
+                            <h4 class="font-bold text-lg">態度面 (50%)</h4>
+                            <ul class="text-sm text-slate-600 list-disc list-inside">
+                                <li>E-portfolio 完成度 (20%)</li>
+                                <li>全院演講出席率 (20%)</li>
+                                <li>電子病歷簽章率 (10%)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="departments" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">各科職責</h2>
+            <p class="text-slate-600 mb-6">不同科別的訓練內容與職責各有側重。點擊下方頁籤，查看各科詳細的訓練安排與規範。</p>
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200">
+                <div class="p-4 border-b border-slate-200">
+                    <div id="tabs-container" class="flex flex-wrap gap-2">
+                        <button data-tab="internal" class="tab-btn px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200 active">內科</button>
+                        <button data-tab="surgery" class="tab-btn px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200">外科</button>
+                        <button data-tab="obgyn" class="tab-btn px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200">婦產科</button>
+                        <button data-tab="peds" class="tab-btn px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200">兒科</button>
+                        <button data-tab="er" class="tab-btn px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200">急診醫學部</button>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div id="internal" class="tab-content active">...</div>
+                    <div id="surgery" class="tab-content">...</div>
+                    <div id="obgyn" class="tab-content">...</div>
+                    <div id="peds" class="tab-content">...</div>
+                    <div id="er" class="tab-content">...</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="leave" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">請假規範</h2>
+            <p class="text-slate-600 mb-6">了解您的休假權益與請假規定，有助於您更好地規劃訓練與個人生活。</p>
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-4">特別休假</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-slate-800 mb-2">一年期 PGY 訓練</h4>
+                            <ul class="space-y-2 list-disc list-inside text-slate-600">
+                                <li>優先給予 7 天特別休假 (優於勞基法)。</li>
+                                <li>完訓未休畢，折算薪資給予。</li>
+                                <li>若留任本院住院醫師，可保留至下年度使用。</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-slate-800 mb-2">二年期 PGY 訓練</h4>
+                            <ul class="space-y-2 list-disc list-inside text-slate-600">
+                                <li>第一年：給予 7 天特休，期滿未休畢則結清折算薪資，不得保留。</li>
+                                <li>第二年：再給予 7 天特休，完訓未休畢折算薪資，留任者可保留。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-4">一般請假規定</h3>
+                    <ul class="space-y-3 list-disc list-inside text-slate-600">
+                        <li>社區醫學訓練月份不得請假 (特殊情況可申請)。</li>
+                        <li>選修科請假不得超過2天 (不含假日)。</li>
+                        <li>值班補休依科部規定，補休需於當月休畢。</li>
+                        <li>請假須前1日完成假單，避免曠職。</li>
+                        <li>申請年假(含連假)須提前2個月知會當科PGY教學負責人及總醫師。</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="epas" class="scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-2">Entrustable Professional Activities (EPAs)等級</h2>
+            <p class="text-slate-600 mb-6">EPAs是評估臨床實踐能力的標準。下表詳細列出不同身份在急診醫學部的各項任務授權等級。將滑鼠移至等級數字上可查看詳細說明。</p>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="font-bold text-lg text-sky-700 mb-4">授權/督導狀態等級</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-6 text-center">
+                     <div class="p-2 bg-slate-100 rounded-md"><strong class="text-sky-600">1:</strong> 僅觀察</div>
+                     <div class="p-2 bg-slate-100 rounded-md"><strong class="text-sky-600">2:</strong> 直接督導</div>
+                     <div class="p-2 bg-slate-100 rounded-md"><strong class="text-sky-600">3:</strong> 間接督導</div>
+                     <div class="p-2 bg-slate-100 rounded-md"><strong class="text-sky-600">4:</strong> 獨立執行</div>
+                     <div class="p-2 bg-slate-100 rounded-md"><strong class="text-sky-600">5:</strong> 督導他人</div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table id="epa-table" class="w-full text-sm text-left">
+                        <thead class="bg-slate-100 text-slate-600 uppercase">
+                            <tr>
+                                <th class="px-4 py-3">身份任務</th>
+                                <th class="px-4 py-3 text-center">急救區評估處置</th>
+                                <th class="px-4 py-3 text-center">診/觀區/急門評估處置</th>
+                                <th class="px-4 py-3 text-center">NG/Foley/Suture</th>
+                                <th class="px-4 py-3 text-center">Endo/CVC Tapping</th>
+                                <th class="px-4 py-3 text-center">Chest Tube</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b">
+                                <td class="px-4 py-3 font-medium">見習醫學生</td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="1">1</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="1">1</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="1">1</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="1">1</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="1">1</span></td>
+                            </tr>
+                             <tr class="border-b bg-sky-50">
+                                <td class="px-4 py-3 font-medium">PGY1</td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="1">1</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="2">2-3</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="2">2-3</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="1">1-2</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="1">1-2</span></td>
+                            </tr>
+                             <tr class="border-b">
+                                <td class="px-4 py-3 font-medium">PGY2 (舊制PGY)</td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="2">2</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="2">2-3</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="3">3</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="2">2-3</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="2">2</span></td>
+                            </tr>
+                             <tr class="border-b">
+                                <td class="px-4 py-3 font-medium">Junior R (R1-2)</td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="2">2-3</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="3">3-4</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="3">3-4</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="2">2-3</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="2">2-3</span></td>
+                            </tr>
+                             <tr>
+                                <td class="px-4 py-3 font-medium">Senior R (R3-4)</td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="3">3-4</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="4">4-5</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="4">4-5</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="4">4-5</span></td>
+                                <td class="px-4 py-3 text-center"><span class="epa-level" data-level="3">3-4</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="epa-tooltip"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const departmentData = {
+                internal: `
+                    <h3 class="text-xl font-bold mb-4 text-slate-800">內科部 PGY 工作職責</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div><h4 class="font-semibold text-lg mb-2">PGY1</h4>
+                            <ul class="space-y-2 list-disc list-inside">
+                                <li><strong>臨床訓練:</strong> 照護4-10床，參加一般內科討論會。NG/Foley可自行操作，CVC/Endo等需在資深住院醫師監督下執行。</li>
+                                <li><strong>值班:</strong> 小夜有R2擔任CR支援，NG/Foley可自行操作，CVC/Endo等由CR或總值完成。</li>
+                                <li><strong>請假:</strong> 特定月份為加強訓練期，原則不准假。請假需提前2個月提出。</li>
+                                <li><strong>課程:</strong> 加強電腦操作、溝通能力及案例討論，安排CVC/Endo等課程。</li>
+                            </ul>
+                        </div>
+                        <div><h4 class="font-semibold text-lg mb-2">PGY2</h4>
+                            <ul class="space-y-2 list-disc list-inside">
+                                <li><strong>臨床訓練:</strong> 照護6-14床，參加所屬專科討論會。NG/Foley可自行操作，CVC/Endo等需在資深住院醫師監督下執行。</li>
+                                <li><strong>值班:</strong> 小夜CR亦可支援，CVC/Endo等需在CR或總值監督下執行。</li>
+                                <li><strong>請假:</strong> 無特別限制，但需提前2個月提出。</li>
+                                <li><strong>課程:</strong> 同PGY1，強化臨床技能與知識。</li>
+                            </ul>
+                        </div>
+                    </div>`,
+                surgery: `
+                    <h3 class="text-xl font-bold mb-4 text-slate-800">外科部 PGY 工作職責</h3>
+                    <div class="grid md:grid-cols-1 gap-6">
+                        <div>
+                            <ul class="space-y-2 list-disc list-inside">
+                                <li><strong>臨床訓練:</strong> PGY1照護上限8床，PGY2上限14床。執行Total care (查房、換藥、開醫囑、寫病歷)。</li>
+                                <li><strong>值班:</strong> NG/Foley/EKG/抽Gas可自行執行。CVC/Endo等需在資深住院醫師監督下執行。每月可預約不值班上限5天。</li>
+                                <li><strong>請假:</strong> 休假不得連續超過五天(含假日)。若為出國，需找代理人協助病歷書寫。</li>
+                            </ul>
+                        </div>
+                    </div>`,
+                obgyn: `
+                    <h3 class="text-xl font-bold mb-4 text-slate-800">婦產部 PGY 工作職責</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div><h4 class="font-semibold text-lg mb-2">PGY1</h4>
+                            <ul class="space-y-2 list-disc list-inside">
+                                <li><strong>臨床訓練:</strong> 照護4-10床，以婦科訓練為主，第一周後獨立primary care。</li>
+                                <li><strong>值班:</strong> 只值病房班。</li>
+                            </ul>
+                        </div>
+                        <div><h4 class="font-semibold text-lg mb-2">PGY2</h4>
+                            <ul class="space-y-2 list-disc list-inside">
+                                <li><strong>臨床訓練:</strong> 照護4-14床，產科/婦科訓練依組別而定。</li>
+                                <li><strong>值班:</strong> 依組別安排病房班或產房班。</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-4"><h4 class="font-semibold text-lg mb-2">共同請假規範</h4>
+                        <ul class="space-y-2 list-disc list-inside">
+                            <li>七天內請年/事假不得超過兩天。</li>
+                            <li>請假及預約不值班不得連續超過三天。</li>
+                        </ul>
+                    </div>`,
+                peds: `
+                    <h3 class="text-xl font-bold mb-4 text-slate-800">兒科部 PGY 工作職責</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div><h4 class="font-semibold text-lg mb-2">PGY1</h4>
+                            <ul class="space-y-2 list-disc list-inside">
+                                <li><strong>臨床訓練:</strong> 照護3-8床，一般兒科為主，在指導下學習並獨立primary care。</li>
+                                <li><strong>值班:</strong> 只值病房班，上滿5個工作天後才開始值班。</li>
+                            </ul>
+                        </div>
+                        <div><h4 class="font-semibold text-lg mb-2">PGY2</h4>
+                            <ul class="space-y-2 list-disc list-inside">
+                                <li><strong>臨床訓練:</strong> 照護4-12床，一般兒科為主，新生兒/早產兒照顧次之。</li>
+                                <li><strong>值班:</strong> 依科部安排學習，穿插兒科病房班。</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <div class="mt-4"><h4 class="font-semibold text-lg mb-2">共同請假規範</h4>
+                        <ul class="space-y-2 list-disc list-inside">
+                            <li>請假規範與婦產部相似，需提前一個月通知總醫師。</li>
+                        </ul>
+                    </div>`,
+                er: `
+                    <h3 class="text-xl font-bold mb-4 text-slate-800">急診醫學部 PGY 工作職責</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div><h4 class="font-semibold text-lg mb-2">PGY1</h4>
+                            <ul class="space-y-2 list-disc list-inside">
+                                <li><strong>臨床訓練區域:</strong> 13班診區(含4班夜班)，5班觀察區。</li>
+                                <li><strong>Procedure訓練目標:</strong> NG, Foley, Suture。</li>
+                                <li><strong>Supervisor:</strong> 急診住院醫師/主治醫師。</li>
+                            </ul>
+                        </div>
+                        <div><h4 class="font-semibold text-lg mb-2">PGY2</h4>
+                            <ul class="space-y-2 list-disc list-inside">
+                                <li><strong>臨床訓練區域:</strong> 13班診區(含5班夜班)，5班急門診。</li>
+                                <li><strong>Procedure訓練目標:</strong> NG, Foley, Suture, Endo/CVC。</li>
+                                <li><strong>Supervisor:</strong> 急診主治醫師。</li>
+                            </ul>
+                        </div>
+                    </div>`
+            };
+            
+            Object.keys(departmentData).forEach(key => {
+                document.getElementById(key).innerHTML = departmentData[key];
+            });
+
+            const assessmentCtx = document.getElementById('assessmentChart').getContext('2d');
+            new Chart(assessmentCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['知識面', '技術面', '態度面'],
+                    datasets: [{
+                        label: '考核配分',
+                        data: [15, 35, 50],
+                        backgroundColor: [
+                            'rgb(56, 189, 248)', // sky
+                            'rgb(20, 184, 166)', // teal
+                            'rgb(245, 158, 11)'  // amber
+                        ],
+                        borderColor: '#f8fafc',
+                        borderWidth: 4,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+
+            const tabsContainer = document.getElementById('tabs-container');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabsContainer.addEventListener('click', function(e) {
+                if (e.target.classList.contains('tab-btn')) {
+                    const tabId = e.target.dataset.tab;
+                    
+                    tabsContainer.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                        if (content.id === tabId) {
+                            content.classList.add('active');
+                        }
+                    });
+                }
+            });
+
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 80) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').includes(current)) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+            
+            const epaTooltip = document.getElementById('epa-tooltip');
+            const epaLevels = document.querySelectorAll('.epa-level');
+            const epaDescriptions = {
+                '1': '在旁觀看老師做，不能動手',
+                '2': '老師在旁看著做，隨時指導救援',
+                '3': '操作時老師在附近，需要再求救，事後做確認',
+                '4': '獨立執行',
+                '5': 'cover指導別人'
+            };
+
+            epaLevels.forEach(level => {
+                level.addEventListener('mousemove', (e) => {
+                    const levelKey = level.dataset.level.charAt(0);
+                    epaTooltip.textContent = `${levelKey}: ${epaDescriptions[levelKey]}`;
+                    epaTooltip.style.display = 'block';
+                    epaTooltip.style.left = `${e.pageX + 10}px`;
+                    epaTooltip.style.top = `${e.pageY + 10}px`;
+                });
+                level.addEventListener('mouseleave', () => {
+                    epaTooltip.style.display = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
