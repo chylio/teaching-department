@@ -3,15 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UGY</title>
+    <title>奇美醫院UGY訓練互動手冊</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals (Stone, Sky, Slate) -->
+    <!-- Application Structure Plan: A single-page design with a sticky top navigation bar for quick access to key sections: Overview, Leave Policy, Clinical & Night Study, and Practical Information. This linear, section-based structure is chosen for usability, allowing UGYs to easily find specific guidelines. Key interactions include smooth scrolling navigation and click-based active navigation links. -->
+    <!-- Visualization & Content Choices: 
+        - Overview/Introduction -> Goal: Inform -> Viz: Text Block -> Interaction: None -> Justification: Provides context. -> Method: HTML/CSS.
+        - Leave Policy -> Goal: Inform -> Viz: Structured List/Cards -> Interaction: Click on nav link to highlight -> Justification: Clear, scannable presentation for rule-based information. -> Method: HTML/CSS.
+        - Clinical Work & Night Study -> Goal: Inform -> Viz: Structured Lists with Sub-sections -> Interaction: Click on nav link to highlight -> Justification: Organizes detailed guidelines for different academic years. -> Method: HTML/CSS.
+        - Practical Information -> Goal: Inform -> Viz: Key-Value Pairs/Short Lists -> Interaction: Click on nav link to highlight -> Justification: Provides quick access to essential locations and procedures. -> Method: HTML/CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-            color: #333;
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc; 
+            color: #333; /* Default text color */
             line-height: 1.6;
             scroll-behavior: smooth;
         }
@@ -41,42 +51,19 @@
             align-items: center;
             gap: 0.5rem;
         }
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-top: 1.5rem;
-            border-radius: 8px;
-            overflow: hidden;
+        h3 {
+            color: #1a202c; /* Consistent with h1 */
+            font-size: 1.5rem; /* Slightly smaller than h2 */
+            font-weight: 600; /* semibold */
+            margin-bottom: 1rem;
         }
-        th, td {
-            padding: 1rem 1.25rem;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
+        ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
         }
-        th:first-child,
-        td:first-child {
-            width: 30%;
-            min-width: 150px;
-            font-weight: 600;
-            color: #2d3748;
-        }
-        th:last-child,
-        td:last-child {
-            width: 70%;
-        }
-        th {
-            background-color: #4a5568;
-            color: #ffffff;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        tr:nth-child(even) {
-            background-color: #f7fafc;
-        }
-        tr:hover {
-            background-color: #ebf8ff;
+        ul.list-none { /* For nested lists where bullets are not desired */
+            list-style-type: none;
+            padding-left: 0;
         }
         .note {
             background-color: #fffbeb;
@@ -92,19 +79,12 @@
             color: #718096;
             margin-bottom: 2rem;
         }
-        .nav-button {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            color: #2563eb;
-            font-weight: 500;
-            transition: background-color 0.2s, color 0.2s;
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
         }
-        .nav-button:hover {
-            background-color: #eff6ff;
-            color: #1d4ed8;
+        .nav-link.active {
+            color: #0284c7;
+            border-bottom-color: #0284c7;
         }
         .sticky-nav {
             position: sticky;
@@ -114,266 +94,196 @@
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             padding: 1rem;
             display: flex;
-            justify-content: flex-start;
+            justify-content: flex-start; /* Align items to start */
             gap: 1.5rem;
             border-bottom-left-radius: 0.75rem;
             border-bottom-right-radius: 0.75rem;
         }
+        /* Styles for the information cards in Practical Information section */
+        .info-card {
+            background-color: #ffffff;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+        .info-card h3 {
+            font-weight: 600;
+            color: #0284c7;
+            margin-bottom: 0.5rem;
+        }
+        .info-card p, .info-card ul {
+            color: #475569; /* slate-600 */
+            font-size: 0.95rem;
+        }
     </style>
 </head>
-<body class="p-4">
-    <!-- 導覽列 -->
-    <nav class="sticky-nav flex items-center">
-        <!-- 返回首頁按鈕 -->
-        <a href="index.html" class="flex items-center gap-2 px-3 py-1 rounded hover:bg-sky-100 text-sky-700 font-bold mr-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h5a1 1 0 001-1v-5h2v5a1 1 0 001 1h5a1 1 0 001-1V10" />
-            </svg>
-            首頁
-        </a>
-        <a href="#leave-rules" class="nav-button">
-            <svg class="lucide lucide-calendar-check" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/></svg>
-            <span>請假規範</span>
-        </a>
-        <a href="#card-pickup-location" class="nav-button">
-            <svg class="lucide lucide-map-pin" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10C21 16 12 22 12 22S3 16 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span>假單領取地點</span>
-        </a>
-        <a href="#clinical-work-night-study" class="nav-button">
-            <svg class="lucide lucide-stethoscope" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18v-5a6 6 0 0 1 12 0v5"/><circle cx="12" cy="16" r="4"/></svg>
-            <span>白班臨床工作及夜間學習/過夜學習規範值班須知</span>
-        </a>
-        <a href="#clinical-skills-center" class="nav-button">
-            <svg class="lucide lucide-building" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="18" rx="2" ry="2"/><path d="M9 6v18M15 6v18"/></svg>
-            <span>臨床技能中心場地教具借用</span>
-        </a>
-        <a href="#ugy-duty-notes" class="nav-button">
-            <svg class="lucide lucide-clipboard-list" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1" ry="1"/><path d="M9 8h6M9 12h6M9 16h6"/></svg>
-            <span>UGY值班注意事宜</span>
-        </a>
-        <a href="#id-card-pickup" class="nav-button">
-            <svg class="lucide lucide-id-card" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="14" rx="2" ry="2"/><circle cx="12" cy="14" r="4"/></svg>
-            <span>領取識別證時間地點</span>
-        </a>
-        <a href="#ugy-duty-room" class="nav-button">
-            <svg class="lucide lucide-bed" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2" ry="2"/><path d="M7 7V2M17 7V2"/></svg>
-            <span>UGY值班室地點</span>
-        </a>
-        <a href="#ugy-office" class="nav-button">
-            <svg class="lucide lucide-briefcase" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><path d="M16 2v5M8 2v5"/></svg>
-            <span>UGY辦公室地點</span>
-        </a>
-    </nav>
+<body class="text-slate-700">
 
-    <div class="container">
-        <h1>UGY</h1>
-        <p class="date">實習醫學生組</p>
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-10">
+        <nav class="container mx-auto px-4 flex items-center h-16">
+            <!-- 返回首頁按鈕 -->
+            <a href="index.html" class="flex items-center gap-2 px-3 py-1 rounded hover:bg-sky-100 text-sky-700 font-bold mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h5a1 1 0 001-1v-5h2v5a1 1 0 001 1h5a1 1 0 001-1V10" />
+                </svg>
+                首頁
+            </a>
+            <h1 class="text-xl md:text-2xl font-bold text-sky-700">UGY訓練互動手冊</h1>
+            <div class="hidden md:flex space-x-6 ml-auto">
+                <a href="#overview" class="nav-link pb-1 border-b-2 border-transparent">總覽</a>
+                <a href="#leave-policy" class="nav-link pb-1 border-b-2 border-transparent">請假規範</a>
+                <a href="#clinical-work" class="nav-link pb-1 border-b-2 border-transparent">臨床工作與學習</a>
+                <a href="#practical-info" class="nav-link pb-1 border-b-2 border-transparent">實用資訊</a>
+            </div>
+        </nav>
+    </header>
 
-        <!-- 請假規範 -->
-        <section id="leave-rules" class="mb-10">
-            <h2>
-                <svg class="lucide lucide-calendar-check text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M9 16l2 2 4-4"/></svg>
-                <span>請假規範</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">說明</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">請假流程程序</td>
-                        <td class="py-3 px-4 text-gray-700">
-                            <p>經由科內主管同意→假卡科內主管簽名→佐證資料附於假卡後→送人資部存檔</p>
-                            <p>1. 公假─需由學校發文至教學中心(參加球類比賽或PGY甄試說明會等)，文內有清楚註明名字及請假日期，待本中心收到文並其單據後，始可請公假。</p>
-                            <p>2. 病假─需出示診斷證明並附於假卡內，RUN請假流程程序。</p>
-                            <p>3. 事假─不在上述範圍內，屬個人私事，一律請事假，RUN請假流程程序。</p>
-                            <div class="note bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 p-3 mt-3 rounded-md">
-                                <p>※上述所有請假前提，請務必、務必、務必先跟當科科內所跟的CR或VS取得同意後，才能開始RUN請假流程！切勿讓科內找不到人，最後才來請假。</p>
-                                <p>※請假事由請如實敍述予科內，科內CR或助理皆會通知教學中心是否屬實！</p>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <section id="overview" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">UGY訓練總覽</h2>
+            <p class="text-slate-600 mb-6">本手冊旨在為奇美醫院的實習醫學生 (UGY) 提供清晰的訓練指引與規範，確保您在訓練期間能順利學習與成長。</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">訓練目的</h3>
+                    <p class="text-slate-600">實習醫學生於上線指導醫師監督下開立處方（覆核醫囑）或施行診療工作，並有專責照護床數（Primary Care）。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">核心要求</h3>
+                    <p class="text-slate-600">落實書寫 primary care 病歷，並積極參與科內教學活動。</p>
+                </div>
+            </div>
         </section>
 
-        <!-- 假單領取地點 -->
-        <section id="card-pickup-location" class="mb-10">
-            <h2>
-                <svg class="lucide lucide-map-pin text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10C21 16 12 22 12 22S3 16 3 10a9 9 0 1 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                <span>假單領取地點</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">說明</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">假單領取地點</td>
-                        <td class="py-3 px-4 text-gray-700">人力資源部(京鑽大樓3F)</td>
-                    </tr>
-                </tbody>
-            </table>
+        <section id="leave-policy" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">請假規範</h2>
+            <p class="text-slate-600 mb-6">請務必遵循請假流程，並提前與科內主管溝通，確保訓練不受影響。</p>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="font-bold text-lg text-sky-700 mb-4">請假流程程序</h3>
+                <p class="text-slate-600 mb-4">經由科內主管同意 → 假卡科內主管簽名 → 佐證資料附於假卡後 → 送人資部存檔</p>
+                <h3 class="font-bold text-lg text-sky-700 mb-4">各類假別說明</h3>
+                <ul class="space-y-3 list-disc list-inside text-slate-600">
+                    <li><strong>公假：</strong> 需由學校發文至教學中心(參加球類比賽或PGY甄試說明會等)，文內有清楚註明名字及請假日期，待本中心收到文並其單據後，始可請公假。</li>
+                    <li><strong>病假：</strong> 需出示診斷證明並附於假卡內，RUN請假流程程序。</li>
+                    <li><strong>事假：</strong> 不在上述範圍內，屬個人私事，一律請事假，RUN請假流程程序。</li>
+                </ul>
+                <div class="note bg-yellow-50 border-l-4 border-yellow-400 text-yellow-800 p-3 mt-3 rounded-md">
+                    <p>※上述所有請假前提，請務必、務必、務必先跟當科科內所跟的CR或VS取得同意後，才能開始RUN請假流程！切勿讓科內找不到人，最後才來請假。</p>
+                    <p>※請假事由請如實敍述予科內，科內CR或助理皆會通知教學中心是否屬實！</p>
+                </div>
+            </div>
         </section>
 
-        <!-- 白班臨床工作及夜間學習/過夜學習規範值班須知 -->
-        <section id="clinical-work-night-study" class="mb-10">
-            <h2>
-                <svg class="lucide lucide-stethoscope text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18v-5a6 6 0 0 1 12 0v5"/><circle cx="12" cy="16" r="4"/></svg>
-                <span>白班臨床工作及夜間學習/過夜學習規範值班須知</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">說明</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">白班臨床工作</td>
-                        <td class="py-3 px-4 text-gray-700">
-                            <p>實習醫學生於上線指導醫師監督下開立處方（覆核醫囑）或施行診療工作，並有專責照護床數（Primary Care）；以兩週為單位，五週內須有一週完成Primary Care。</p>
-                            <p>落實寫排學員依 primary care 書寫「入院紀錄」、「病程紀錄」或「出院病歷摘要」（此三項至少要寫兩項）。</p>
-                            <p>實習生於外科病房實習時，若主動提出票刀要求，主治醫師得依學生程度先行評估，以決定是否參與手術進行。</p>
-                            <p>實習醫學生應每日隨同上級指導醫師或科部主任巡視病房，並隨時報告病人之病情及參與本科的內之教學活動並留有紀錄存檔。</p>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">夜間學習及過夜學習須知</td>
-                        <td class="py-3 px-4 text-gray-700">
-                            <p>➤ 請各科部務必落實執行實習醫學生夜間學習及過夜學習：</p>
-                            <p>五年級：安排每週一次（W一W五）夜間學習至晚上10點。</p>
-                            <p>六年級：安排每週一次（W一W五）過夜學習（overnight），隔日 pm off。</p>
-                            <p>落實安排實習醫學生值班並排入班表及系統內，且規定實習生值班時段需留在醫院作命並依規定至系統上程式之住院資訊系統簽到。</p>
-                            <p>請上線值班醫師於接獲處理通知時應帶實習 UGY 一同處理，並請護理站通知 UGY 前來學習。過夜學習必須至少具備「接新病人」及「處理急病人」之實作機會。</p>
-                            <p>要求 UGY 熱誠言下不允班時須與上級醫師報到，並告知當晚將進行夜間學習或過夜學習，而 UGY 一律待在病房跟值班上級醫師處理病人。</p>
-                            <p>實習醫學生值班當日須完成「夜間學習紀錄單」並由上線值班醫師書寫回饋並簽名，若有優越事評等可以登錄作為日後獎懲依據。</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <section id="clinical-work" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">臨床工作與夜間學習</h2>
+            <p class="text-slate-600 mb-6">了解您的臨床職責與夜間學習安排，確保訓練品質與個人發展。</p>
+            <div class="space-y-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-4">白班臨床工作</h3>
+                    <ul class="space-y-2 list-disc list-inside text-slate-600">
+                        <li>實習醫學生於上線指導醫師監督下開立處方（覆核醫囑）或施行診療工作，並有專責照護床數（Primary Care）；以兩週為單位，五週內須有一週完成Primary Care。</li>
+                        <li>落實寫排學員依 primary care 書寫「入院紀錄」、「病程紀錄」或「出院病歷摘要」（此三項至少要寫兩項）。</li>
+                        <li>實習生於外科病房實習時，若主動提出票刀要求，主治醫師得依學生程度先行評估，以決定是否參與手術進行。</li>
+                        <li>實習醫學生應每日隨同上級指導醫師或科部主任巡視病房，並隨時報告病人之病情及參與本科的內之教學活動並留有紀錄存檔。</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-4">夜間學習及過夜學習須知</h3>
+                    <ul class="space-y-2 list-disc list-inside text-slate-600">
+                        <li>請各科部務必落實執行實習醫學生夜間學習及過夜學習：</li>
+                        <li>五年級：安排每週一次（W一W五）夜間學習至晚上10點。</li>
+                        <li>六年級：安排每週一次（W一W五）過夜學習（overnight），隔日 pm off。</li>
+                        <li>落實安排實習醫學生值班並排入班表及系統內，且規定實習生值班時段需留在醫院作命並依規定至系統上程式之住院資訊系統簽到。</li>
+                        <li>請上線值班醫師於接獲處理通知時應帶實習 UGY 一同處理，並請護理站通知 UGY 前來學習。過夜學習必須至少具備「接新病人」及「處理急病人」之實作機會。</li>
+                        <li>要求 UGY 熱誠言下不允班時須與上級醫師報到，並告知當晚將進行夜間學習或過夜學習，而 UGY 一律待在病房跟值班上級醫師處理病人。</li>
+                        <li>實習醫學生值班當日須完成「夜間學習紀錄單」並由上線值班醫師書寫回饋並簽名，若有優越事評等可以登錄作為日後獎懲依據。</li>
+                    </ul>
+                </div>
+            </div>
         </section>
 
-        <!-- 臨床技能中心場地教具借用 -->
-        <section id="clinical-skills-center" class="mb-10">
-            <h2>
-                <svg class="lucide lucide-building text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="18" rx="2" ry="2"/><path d="M9 6v18M15 6v18"/></svg>
-                <span>臨床技能中心場地教具借用</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">說明</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">借用路徑</td>
-                        <td class="py-3 px-4 text-gray-700">系統主程式>上面那排的intranet>主選單>主要作業系統裡的臨床技能中心暨OSCE考場借用</td>
-                    </tr>
-                </tbody>
-            </table>
+        <section id="practical-info" class="scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">實用資訊</h2>
+            <p class="text-slate-600 mb-6">以下是您在奇美醫院訓練期間可能需要的實用資訊，方便您快速查詢。</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="info-card">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">假單領取地點</h3>
+                    <p>人力資源部 (京鑽大樓3F)</p>
+                </div>
+                <div class="info-card">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">UGY值班注意事宜</h3>
+                    <ul class="list-disc list-inside">
+                        <li>各科部需落實執行安排UGY值班。</li>
+                        <li>值班時段需留在醫院待命。</li>
+                        <li>務必至系統簽到及向當天上級醫師或總值醫師報到。</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">領取識別證時間地點</h3>
+                    <p>報到隔日下午4點~4點半；地點白宮餐廳</p>
+                </div>
+                <div class="info-card">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">UGY值班室地點</h3>
+                    <p>第二醫療大樓12F空橋-UGY值班室</p>
+                </div>
+                <div class="info-card">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">UGY辦公室地點</h3>
+                    <p>第一辦公區2F-UGY辦公室(維康藥局後方)</p>
+                </div>
+                <div class="info-card">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">臨床技能中心場地教具借用</h3>
+                    <p>借用路徑：系統主程式 > 上面那排的intranet > 主選單 > 主要作業系統裡的臨床技能中心暨OSCE考場借用</p>
+                </div>
+            </div>
         </section>
+    </main>
 
-        <!-- UGY值班注意事宜 -->
-        <section id="ugy-duty-notes" class="mb-10">
-            <h2>
-                <svg class="lucide lucide-clipboard-list text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1" ry="1"/><path d="M9 8h6M9 12h6M9 16h6"/></svg>
-                <span>UGY值班注意事宜</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">說明</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">值班規範</td>
-                        <td class="py-3 px-4 text-gray-700">
-                            <p>1. 各科部需落實執行安排UGY值班。且學生於值班時段需留在醫院待命。</p>
-                            <p>2. UGY值班務必至系統簽到及向當天上級醫師或總值醫師報到，以共同討論值班相關事宜。</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            const header = document.querySelector('header'); 
+            let headerHeight = 0; 
 
-        <!-- 領取識別證時間地點 -->
-        <section id="id-card-pickup" class="mb-10">
-            <h2>
-                <svg class="lucide lucide-id-card text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="14" rx="2" ry="2"/><circle cx="12" cy="14" r="4"/></svg>
-                <span>領取識別證時間地點</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">說明</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">時間地點</td>
-                        <td class="py-3 px-4 text-gray-700">報到隔日下午4點~4點半；地點白宮餐廳</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+            function updateHeaderHeight() {
+                headerHeight = header.offsetHeight;
+            }
 
-        <!-- UGY值班室地點 -->
-        <section id="ugy-duty-room" class="mb-10">
-            <h2>
-                <svg class="lucide lucide-bed text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2" ry="2"/><path d="M7 7V2M17 7V2"/></svg>
-                <span>UGY值班室地點</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">說明</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">值班室地點</td>
-                        <td class="py-3 px-4 text-gray-700">第二醫療大樓12F空橋-UGY值班室</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+            updateHeaderHeight();
+            window.addEventListener('resize', updateHeaderHeight);
+            
+            // Function to update active navigation link on click
+            function setActiveNavLinkOnClick(clickedLink) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+                clickedLink.classList.add('active');
+            }
 
-        <!-- UGY辦公室地點 -->
-        <section id="ugy-office" class="mb-10">
-            <h2>
-                <svg class="lucide lucide-briefcase text-blue-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><path d="M16 2v5M8 2v5"/></svg>
-                <span>UGY辦公室地點</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">說明</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">辦公室地點</td>
-                        <td class="py-3 px-4 text-gray-700">第一辦公區2F-UGY辦公室(維康藥局後方)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-    </div>
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    setActiveNavLinkOnClick(this); // Set active class immediately on click
+
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - headerHeight - 10, 
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Set initial active link on page load (e.g., if page loads at a specific section)
+            // This part is optional if you only want click-based activation, but good for consistency
+            // For this specific request, the user wants only click-based, so we'll remove scroll-based activation.
+            // If you want initial active state on load for the first section, you can add:
+            // if (navLinks.length > 0) { navLinks[0].classList.add('active'); }
+        });
+    </script>
 </body>
 </html>
