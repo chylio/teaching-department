@@ -3,350 +3,278 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新進住院醫師須知</title>
+    <title>奇美醫院新進住院醫師須知</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals (Stone, Sky, Slate) -->
+    <!-- Application Structure Plan: A single-page design with a sticky top navigation bar for quick access to key sections: Overview, Annual Assessment, Training Courses, Further Study, and Quick Links. This linear, section-based structure is chosen for usability, allowing new residents to easily find specific guidelines and information. Key interactions include smooth scrolling navigation. -->
+    <!-- Visualization & Content Choices: 
+        - Overview/Introduction -> Goal: Inform -> Viz: Text Block -> Interaction: None -> Justification: Provides context. -> Method: HTML/CSS.
+        - Annual Assessment -> Goal: Inform & Compare -> Viz: Static Number Cards for quantifiable items, Structured List for others -> Interaction: None -> Justification: Clearly outlines criteria for promotion and salary adjustment, highlighting numerical targets. -> Method: HTML/CSS.
+        - Training Courses -> Goal: Inform -> Viz: Structured List -> Interaction: None -> Justification: Details required courses and resources. -> Method: HTML/CSS.
+        - Further Study -> Goal: Inform -> Viz: Structured List -> Interaction: None -> Justification: Presents various study types and regions, with financial details removed as per user request. -> Method: HTML/CSS.
+        - Quick Links -> Goal: Inform -> Viz: Key-Value Pairs/Short Lists -> Interaction: None -> Justification: Provides quick access to essential internal resources and procedures. -> HTML/CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-            color: #333;
-            line-height: 1.6;
-            scroll-behavior: smooth;
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: #f8fafc; 
         }
-        .container {
-            max-width: 1000px;
-            margin: 2rem auto;
-            padding: 1.5rem;
-            background-color: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        .nav-link {
+            transition: color 0.3s, border-bottom-color 0.3s;
         }
-        h1 {
-            color: #1a202c;
+        .nav-link.active {
+            color: #0284c7;
+            border-bottom-color: #0284c7;
+        }
+        /* Custom styles for the numerical display cards */
+        .number-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem; /* Equivalent to Tailwind gap-6 */
+            margin-top: 1.5rem; /* Equivalent to Tailwind mt-6 */
+            margin-bottom: 1.5rem; /* Equivalent to Tailwind mb-6 */
+        }
+        .number-card {
+            background-color: #e0f2f7; /* Light blue similar to image_788ce2.png */
+            padding: 1.5rem; /* Equivalent to Tailwind p-6 */
+            border-radius: 0.75rem; /* Equivalent to Tailwind rounded-xl */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Equivalent to Tailwind shadow-sm */
+            border: 1px solid #bae6fd; /* A slightly darker border */
             text-align: center;
-            margin-bottom: 1.5rem;
-            font-size: 2.5rem;
-            font-weight: 700;
         }
-        h2 {
-            color: #2d3748;
-            font-size: 1.8rem;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-            border-bottom: 2px solid #edf2f7;
-            padding-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .number-card h4 {
+            font-weight: 600; /* semibold */
+            color: #0284c7; /* sky-700 */
+            margin-bottom: 0.5rem; /* mb-2 */
         }
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-top: 1.5rem;
-            border-radius: 8px;
-            overflow: hidden;
+        .number-card p.value {
+            font-size: 2.25rem; /* text-4xl */
+            font-weight: 700; /* bold */
+            color: #1e293b; /* slate-800 */
+            line-height: 1;
         }
-        th, td {
-            padding: 1rem 1.25rem;
-            text-align: left;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        th:first-child,
-        td:first-child {
-            width: 30%;
-            min-width: 150px;
-            font-weight: 600;
-            color: #2d3748;
-        }
-        th:last-child,
-        td:last-child {
-            width: 70%;
-        }
-        th {
-            background-color: #4a5568;
-            color: #ffffff;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        tr:nth-child(even) {
-            background-color: #f7fafc;
-        }
-        tr:hover {
-            background-color: #ebf8ff;
-        }
-        .note {
-            background-color: #fffbeb;
-            border-left: 4px solid #f6ad55;
-            padding: 1rem;
-            margin-top: 1.5rem;
-            border-radius: 6px;
-            color: #664d03;
-        }
-        .date {
-            text-align: center;
-            font-size: 1rem;
-            color: #718096;
-            margin-bottom: 2rem;
-        }
-        .nav-button {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1rem;
-            border-radius: 0.5rem;
-            color: #2563eb;
-            font-weight: 500;
-            transition: background-color 0.2s, color 0.2s;
-        }
-        .nav-button:hover {
-            background-color: #eff6ff;
-            color: #1d4ed8;
-        }
-        .sticky-nav {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            background-color: #ffffff;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            padding: 1rem;
-            display: flex;
-            justify-content: flex-start;
-            gap: 1.5rem;
-            border-bottom-left-radius: 0.75rem;
-            border-bottom-right-radius: 0.75rem;
+        .number-card p.description {
+            font-size: 0.875rem; /* text-sm */
+            color: #475569; /* slate-600 */
+            margin-top: 0.5rem; /* mt-2 */
         }
     </style>
 </head>
-<body class="p-4">
-    <!-- 導覽列 -->
-    <nav class="sticky-nav flex items-center">
-        <!-- 返回首頁按鈕 -->
-        <a href="index.html" class="flex items-center gap-2 px-3 py-1 rounded hover:bg-sky-100 text-sky-700 font-bold mr-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M3 12l9-9 9 9M4 10v10a1 1 0 001 1h5a1 1 0 001-1v-5h2v5a1 1 0 001 1h5a1 1 0 001-1V10" />
-            </svg>
-            首頁
-        </a>
-        <a href="#training-assessment" class="nav-button">
-            <span>年度訓練考核</span>
-        </a>
-        <a href="#training-courses" class="nav-button">
-            <span>訓練課程</span>
-        </a>
-        <a href="#incentives" class="nav-button">
-            <span>獎勵金</span>
-        </a>
-        <a href="#further-study" class="nav-button">
-            <span>進修</span>
-        </a>
-        <a href="#query-info" class="nav-button">
-            <span>查詢相關辦法</span>
-        </a>
-        <a href="#incident-handling" class="nav-button">
-            <span>職災/針扎處理</span>
-        </a>
-    </nav>
+<body class="text-slate-700">
 
-    <div class="container">
-        <h1>新進住院醫師須知</h1>
-        <p class="date">住院醫師組</p>
+    <header class="bg-white/80 backdrop-blur-lg shadow-sm sticky top-0 z-10">
+        <nav class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <h1 class="text-xl md:text-2xl font-bold text-sky-700">新進住院醫師須知</h1>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#overview" class="nav-link pb-1 border-b-2 border-transparent">總覽</a>
+                    <a href="#assessment" class="nav-link pb-1 border-b-2 border-transparent">年度考核</a>
+                    <a href="#courses" class="nav-link pb-1 border-b-2 border-transparent">訓練課程</a>
+                    <a href="#further-study" class="nav-link pb-1 border-b-2 border-transparent">進修</a>
+                    <a href="#quick-links" class="nav-link pb-1 border-b-2 border-transparent">常用查詢</a>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-        <section id="training-assessment" class="mb-10">
-            <h2>
-                <span>住院醫師年度訓練考核</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">內容</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">每年晉升調薪</td>
-                        <td class="py-3 px-4 text-gray-700">
-                            <p>1. 全院演講出席率應出席7場</p>
-                            <p>2. 教學門診3次(以教學門診記錄單為依據)</p>
-                            <p>3. 住院醫師論文發表加分</p>
-                            <p>4. 參加院內外學術競賽加分</p>
-                            <p>5. 「全人照護學習護照」與「病人醫療照護心得」繳交</p>
-                            <p>6. CFD學分達30點</p>
-                            <p>7. 保持效期內ACLS證書(除小兒科需APLS/NRP；病理部/臨床病理部需ALS外)</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <main class="container mx-auto p-4 md:p-8">
+        
+        <section id="overview" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">住院醫師組總覽</h2>
+            <p class="text-slate-600 mb-6">本須知旨在為奇美醫院新進住院醫師提供全面的訓練、考核、獎勵與進修資訊，協助您順利展開職業生涯。</p>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">晉升與調薪</h3>
+                    <p class="text-slate-600">住院醫師年度訓練考核與每年晉升調薪息息相關。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">訓練重點</h3>
+                    <p class="text-slate-600">涵蓋全院演講、教學門診、論文發表、學術競賽等多方面要求。</p>
+                </div>
+            </div>
         </section>
 
-        <section id="training-courses" class="mb-10">
-            <h2>
-                <span>訓練課程</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">內容</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">筆試模擬考及口試</td>
-                        <td class="py-3 px-4 text-gray-700">
-                            <p>1. 三月與七月全院性筆試模擬考及口試。</p>
-                            <p>2. 歷年各專科模擬考試題庫 (教學平台=>多元學習=>各專科醫師考試題庫)。</p>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">動脈導管A-line置放教學課程</td>
-                        <td class="py-3 px-4 text-gray-700">內外骨婦兒急</td>
-                    </tr>
-                </tbody>
-            </table>
+        <section id="assessment" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">住院醫師年度訓練考核</h2>
+            <p class="text-slate-600 mb-6">年度考核是住院醫師晉升與調薪的重要依據，請務必達成以下各項要求。</p>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="number-card-grid">
+                    <div class="number-card">
+                        <h4>演講出席</h4>
+                        <p class="value">7<span class="text-base font-normal">場</span></p>
+                        <p class="description">全院演講出席率</p>
+                    </div>
+                    <div class="number-card">
+                        <h4>教學門診</h4>
+                        <p class="value">3<span class="text-base font-normal">次</span></p>
+                        <p class="description">教學門診 (依記錄單)</p>
+                    </div>
+                    <div class="number-card">
+                        <h4>CFD學分</h4>
+                        <p class="value">30<span class="text-base font-normal">點</span></p>
+                        <p class="description">CFD學分達標</p>
+                    </div>
+                </div>
+                <ul class="space-y-3 list-disc list-inside text-slate-600 mt-6">
+                    <li>住院醫師論文發表加分。</li>
+                    <li>參加院內外學術競賽加分。</li>
+                    <li>「全人照護學習護照」與「病人醫療照護心得」繳交。</li>
+                    <li>保持效期內ACLS證書 (除小兒科需APLS/NRP；病理部/臨床病理部需ALS外)。</li>
+                </ul>
+            </div>
         </section>
 
-        <section id="incentives" class="mb-10">
-            <h2>
-                <span>獎勵金</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">內容</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">R1-R3年度評比優秀獎勵金</td>
-                        <td class="py-3 px-4 text-gray-700">3000、2000、1000與院長頒獎</td>
-                    </tr>
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">每季病歷書寫優良者獎勵金</td>
-                        <td class="py-3 px-4 text-gray-700">2000元與院長頒獎</td>
-                    </tr>
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">每年住院醫師論文評選獎勵金</td>
-                        <td class="py-3 px-4 text-gray-700">優渥與院長頒獎</td>
-                    </tr>
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">每季指導實習醫學生夜間學習教學</td>
-                        <td class="py-3 px-4 text-gray-700">設有「值班教學醫師優秀獎」獎勵金2000元及「最佳值班教學醫師獎」獎勵金5000元與院長頒獎</td>
-                    </tr>
-                </tbody>
-            </table>
+        <section id="courses" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">訓練課程</h2>
+            <p class="text-slate-600 mb-6">為提升您的臨床技能與專業知識，醫院提供多樣化的訓練課程。</p>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <ul class="space-y-3 list-disc list-inside text-slate-600">
+                    <li>三月與七月全院性筆試模擬考及口試。
+                        <ul class="list-none pl-6 mt-1">
+                            <li>歷年各專科模擬考試題庫 (教學平台=>多元學習=>各專科醫師考試題庫)。</li>
+                        </ul>
+                    </li>
+                    <li>動脈導管A-line置放教學課程 (內外骨婦兒急)。</li>
+                </ul>
+            </div>
         </section>
 
-        <section id="further-study" class="mb-10">
-            <h2>
-                <span>進修</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">內容</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">國內長期進修</td>
-                        <td class="py-3 px-4 text-gray-700">
-                            <p>※服務滿一年，並完成各專科基礎住院醫師訓練者。以完成該次專科所需訓練年限（半年以上）</p>
-                            <p>※公假，院方補助每月新台幣八萬元</p>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">國內外短期進修</td>
-                        <td class="py-3 px-4 text-gray-700">
-                            <p>※滿一年，國內、外各醫學訓練中心，以半年（含）內為限。</p>
-                            <p>※公假進修，期間核發每月8萬元之薪資(中醫、牙科另訂之)，補助經濟艙來回機票一次。</p>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">RRC訓練期間外訓</td>
-                        <td class="py-3 px-4 text-gray-700">
-                            <p>※國內具專科醫師訓練資格之院所，以半年（含）內為限。</p>
-                            <p>※公假方式派訓，領原薪資。</p>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">參加國內外醫學會議</td>
-                        <td class="py-3 px-4 text-gray-700">
-                            <p>※以院方名義應邀於醫學會議上發表論文之住院醫師（限第一作者身分)公假參加。</p>
-                            <p>※報到費、註冊費及交通費得由(科)部基金支付。</p>
-                            <p>※公費參加，若第一作者為主治醫師，僅第一作者能報支差旅費；若第一作者為住院醫師，而論文負責作者為本院主治醫師時，則主治醫師不得報支差旅費。</p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <section id="further-study" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">進修</h2>
+            <p class="text-slate-600 mb-6">為支持住院醫師的專業發展，醫院提供多種國內外進修機會。</p>
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <ul class="space-y-4 list-disc list-inside text-slate-600">
+                    <li><strong>國內長期進修：</strong>
+                        <ul class="list-none pl-6 mt-1 space-y-2">
+                            <li>服務滿一年，並完成各專科基礎住院醫師訓練者。以完成該次專科所需訓練年限（半年以上）。</li>
+                            <li>公假。</li>
+                        </ul>
+                    </li>
+                    <li><strong>國內外短期進修：</strong>
+                        <ul class="list-none pl-6 mt-1 space-y-2">
+                            <li>滿一年，國內、外各醫學訓練中心，以半年（含）內為限。</li>
+                            <li>公假進修。</li>
+                        </ul>
+                    </li>
+                    <li><strong>RRC訓練期間外訓：</strong>
+                        <ul class="list-none pl-6 mt-1 space-y-2">
+                            <li>國內具專科醫師訓練資格之院所，以半年（含）內為限。</li>
+                            <li>公假方式派訓，領原薪資。</li>
+                        </ul>
+                    </li>
+                    <li><strong>參加國內外醫學會議：</strong>
+                        <ul class="list-none pl-6 mt-1 space-y-2">
+                            <li>以院方名義應邀於醫學會議上發表論文之住院醫師（限第一作者身分)公假參加。</li>
+                            <li>公費參加，若第一作者為主治醫師，僅第一作者能報支差旅費；若第一作者為住院醫師，而論文負責作者為本院主治醫師時，主治醫師差旅費由院方支付，住院醫師差旅費由科部支付。</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </section>
 
-        <section id="query-info" class="mb-10">
-            <h2>
-                <span>課程與相關辦法查詢</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">內容</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">課程查詢</td>
-                        <td class="py-3 px-4 text-gray-700">課程可於「教學平台」查詢</td>
-                    </tr>
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">住院醫師教學相關辦法查詢</td>
-                        <td class="py-3 px-4 text-gray-700">於「醫學教育委員會」網頁「住院醫師組」</td>
-                    </tr>
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">病歷書寫品質查核表查詢</td>
-                        <td class="py-3 px-4 text-gray-700">
-                            <p>1. 系統主程式→主選單→四大醫囑→住院病歷審查。</p>
-                            <p>2. 於歷史資料頁籤→點選「查詢資料」，即顯示個人病歷查核清單。</p>
-                            <p>3. 點選查閱的資料，病歷評分結果會顯示於下方視窗。</p>
-                        </td>
-                    </tr>
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">值班 QA</td>
-                        <td class="py-3 px-4 text-gray-700">線上值班手冊。(系統主程式→住院醫囑系統→臨床作業手冊)</td>
-                    </tr>
-                </tbody>
-            </table>
+        <section id="quick-links" class="scroll-mt-20">
+            <h2 class="text-3xl font-bold text-slate-800 mb-4">常用資訊查詢</h2>
+            <p class="text-slate-600 mb-6">以下是您在訓練期間可能需要查詢的相關資訊途徑。</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">課程與相關辦法查詢</h3>
+                    <ul class="space-y-1 text-slate-600">
+                        <li>課程可於「教學平台」查詢。</li>
+                        <li>住院醫師教學相關辦法於「醫學教育委員會」網頁「住院醫師組」。</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">病歷書寫品質查核表查詢</h3>
+                    <ul class="space-y-1 text-slate-600">
+                        <li>系統主程式 → 主選單 → 四大醫囑 → 住院病歷審查。</li>
+                        <li>於歷史資料頁籤 → 點選「查詢資料」，即顯示個人病歷查核清單。</li>
+                        <li>點選查閱的資料，病歷評分結果會顯示於下方視窗。</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">值班 QA</h3>
+                    <p class="text-slate-600">線上值班手冊。(系統主程式 → 住院醫囑系統 → 臨床作業手冊)</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">『職災/針扎處理流程』查詢</h3>
+                    <p class="text-slate-600">院內網站首頁 / 部門資訊 / 行政部門 / 安全衛生管理室 / 職業災害(/針扎)處理流程</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                    <h3 class="font-bold text-lg text-sky-700 mb-2">針扎線上通報</h3>
+                    <p class="text-slate-600">系統主程式 / 輸入人事號密碼登入 / 主選單 / 全院共同性作業 / 醫療尖銳物品扎傷通報單</p>
+                </div>
+            </div>
         </section>
+    </main>
 
-        <section id="incident-handling" class="mb-10">
-            <h2>
-                <span>職災/針扎處理流程</span>
-            </h2>
-            <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tl-lg">項目</th>
-                        <th class="py-3 px-4 text-left text-sm font-semibold uppercase tracking-wider rounded-tr-lg">內容</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">『職災/針扎處理流程』查詢</td>
-                        <td class="py-3 px-4 text-gray-700">院內網站首頁/部門資訊/行政部門/安全衛生管理室/職業災害(/針扎)處理流程</td>
-                    </tr>
-                    <tr class="hover:bg-blue-50 transition-colors duration-150">
-                        <td class="py-3 px-4 font-medium text-gray-900">針扎線上通報</td>
-                        <td class="py-3 px-4 text-gray-700">系統主程式/輸入人事號密碼登入/主選單/全院共同性作業/醫療尖銳物品扎傷通報單</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
-    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('section');
+            const header = document.querySelector('header'); 
+            let headerHeight = 0; 
+
+            function updateHeaderHeight() {
+                headerHeight = header.offsetHeight;
+            }
+
+            updateHeaderHeight();
+            window.addEventListener('resize', updateHeaderHeight);
+            
+            function updateActiveNavLink() {
+                let current = '';
+                const offset = headerHeight + 20; 
+
+                for (let i = sections.length - 1; i >= 0; i--) {
+                    const section = sections[i];
+                    const rect = section.getBoundingClientRect();
+                    
+                    if (rect.top <= offset && rect.bottom > offset) {
+                        current = section.getAttribute('id');
+                        break; 
+                    }
+                }
+
+                if (!current && sections.length > 0) {
+                    const firstSectionRect = sections[0].getBoundingClientRect();
+                    if (firstSectionRect.top <= offset || window.pageYOffset === 0) {
+                         current = sections[0].getAttribute('id');
+                    }
+                }
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    const linkHref = link.getAttribute('href');
+                    if (linkHref === `#${current}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveNavLink);
+            updateActiveNavLink(); 
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - headerHeight - 10, 
+                            behavior: 'smooth'
+                        });
+                        setTimeout(updateActiveNavLink, 250); 
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
+```
+我做了一些更改。我已從「奇美醫院新進住院醫師須知」文件中刪除所有與費用、獎勵金和補助相關的數據
